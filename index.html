@@ -1,801 +1,796 @@
-<!DOCTYPE html><html lang="vi"><head><meta charset='UTF-8'>
-        <meta http-equiv="Content-Security-Policy" content="default-src * data: blob: 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline'; font-src * data: blob: 'unsafe-inline';">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="theme-color" content="#2563eb">
-        
-            <style>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src * data: blob: 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline'; font-src * data: blob: 'unsafe-inline';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#2563eb">
+<style>
 :root{
-  --bg-1:#f8fbff;
-  --bg-2:#eef7ff;
-  --surface:#ffffff;
-  --surface-2:#f8fbff;
-  --text-1:#16324f;
-  --text-2:#49627d;
-  --line:#dbe7f3;
-  --line-strong:#bfd4e7;
-  --shadow:0 18px 50px rgba(38,70,108,.12);
-  --shadow-soft:0 8px 24px rgba(38,70,108,.08);
-  --primary:#2563eb;
-  --primary-2:#1d4ed8;
-  --accent:#0ea5e9;
-  --success:#16a34a;
-  --warning:#f59e0b;
-  --danger:#ef4444;
-  --base-size:32px;
-  --opt-size:28px;
-  --badge-size:50px;
-  --math-scale:112%;
-  --radius-xl:24px;
-  --radius-lg:18px;
-  --radius-md:14px;
+  --bg-1:#f8fbff; --bg-2:#eef7ff; --surface:#ffffff; --surface-2:#f8fbff;
+  --text-1:#16324f; --text-2:#49627d; --line:#dbe7f3; --line-strong:#bfd4e7;
+  --shadow:0 18px 50px rgba(38,70,108,.12); --shadow-soft:0 8px 24px rgba(38,70,108,.08);
+  --primary:#2563eb; --primary-2:#1d4ed8; --accent:#0ea5e9; --success:#16a34a;
+  --warning:#f59e0b; --danger:#ef4444; --base-size:32px; --opt-size:28px; --badge-size:50px;
+  --math-scale:112%; --radius-xl:24px; --radius-lg:18px; --radius-md:14px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  background:radial-gradient(circle at top left,#ffffff 0%,#f6fbff 32%,transparent 55%),linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 100%);
+  color:var(--text-1); min-height:100dvh; overflow-x:hidden; overflow-y:auto;
+}
+body.before-start .exam-shell, body.before-start .nav-arrow, body.before-start #floatingSubmitBtn{display:none!important}
+body.before-submit .btn-reveal, body.before-submit .btn-explain, body.before-submit .btn-check{display:none!important}
+body.after-submit .btn-reveal, body.after-submit .btn-explain{display:flex!important}
+.start-screen{
+  min-height:100dvh; display:flex; align-items:center; justify-content:center; padding:28px;
   background:
-    radial-gradient(circle at top left, #ffffff 0%, #f6fbff 32%, transparent 55%),
-    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
-  color:var(--text-1);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  min-height:100dvh;
-  overflow-x:hidden;
-  overflow-y:auto;
-  user-select:none;
-  -webkit-tap-highlight-color:transparent;
+    radial-gradient(circle at 12% 14%, rgba(125,211,252,.45) 0 0, transparent 28%),
+    radial-gradient(circle at 88% 16%, rgba(167,139,250,.22) 0 0, transparent 26%),
+    radial-gradient(circle at 72% 88%, rgba(34,197,94,.18) 0 0, transparent 30%),
+    linear-gradient(135deg,#eff6ff 0%,#f8fbff 45%,#ecfeff 100%);
+  position:relative; overflow:hidden;
 }
+.start-screen::before,
+.start-screen::after{content:""; position:absolute; border-radius:999px; filter:blur(1px); opacity:.75; pointer-events:none;}
+.start-screen::before{width:360px;height:360px;left:-120px;bottom:-130px;background:rgba(14,165,233,.16)}
+.start-screen::after{width:300px;height:300px;right:-90px;top:-90px;background:rgba(37,99,235,.14)}
+.start-card{
+  width:min(96%,880px); background:rgba(255,255,255,.88); border:1px solid rgba(191,212,231,.9);
+  border-radius:34px; box-shadow:0 28px 80px rgba(37,99,235,.15); padding:34px; position:relative; overflow:hidden;
+  backdrop-filter:blur(16px);
+}
+.start-card::before{content:""; position:absolute; inset:0 0 auto 0; height:8px; background:linear-gradient(90deg,#2563eb,#0ea5e9,#22c55e,#f59e0b)}
+.start-card::after{content:"∑ π √x"; position:absolute; right:28px; bottom:12px; font-size:54px; font-weight:900; color:rgba(37,99,235,.055); letter-spacing:4px; pointer-events:none}
+.start-hero{display:flex; align-items:center; justify-content:center; gap:18px; margin:6px 0 8px}
+.start-logo{width:74px;height:74px;border-radius:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:linear-gradient(135deg,#2563eb 0%,#0ea5e9 55%,#22c55e 100%); color:#fff; font-size:38px;box-shadow:0 18px 36px rgba(37,99,235,.24);}
+.start-title{font-size:40px; line-height:1.15; font-weight:1000; text-align:left; margin:0; color:#0f2f57; letter-spacing:.3px}
+.start-subtitle{font-size:18px; color:var(--text-2); text-align:center; margin:8px 0 22px; font-weight:600}
+.exam-info-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0 22px}
+.exam-info-item{display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:20px;background:linear-gradient(180deg,#ffffff 0%,#f4f9ff 100%); border:1px solid #dbeafe; box-shadow:var(--shadow-soft);}
+.exam-info-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:16px;background:#e0f2fe;font-size:24px;flex-shrink:0}
+.exam-info-text{display:flex; flex-direction:column; gap:3px}
+.exam-info-label{font-size:14px; font-weight:900; color:#2563eb; text-transform:uppercase; letter-spacing:.35px}
+.exam-info-value{font-size:20px; font-weight:900; color:#16324f}
+.student-panel{background:linear-gradient(135deg,#f8fbff 0%,#eef7ff 100%); border:1px solid #dbeafe;border-radius:26px; padding:20px; box-shadow:inset 0 1px 0 rgba(255,255,255,.9);}
+.start-group{display:flex; flex-direction:column; gap:10px; margin-bottom:0}
+.start-label{font-size:18px; font-weight:900; display:flex; align-items:center; gap:8px; color:#16324f}
+.input-wrap{position:relative}
+.input-wrap .input-icon{position:absolute; left:18px; top:50%; transform:translateY(-50%); font-size:24px; opacity:.9}
+.start-input{width:100%; padding:18px 20px 18px 58px; border-radius:20px; border:2px solid #c7dcf2; outline:none;font-size:24px; font-weight:800; color:var(--text-1); background:#fff; box-shadow:var(--shadow-soft)}
+.start-input:focus{border-color:#60a5fa; box-shadow:0 0 0 6px rgba(59,130,246,.13)}
+.start-actions{display:flex; justify-content:center; margin-top:20px}
+.start-btn{min-width:240px; border:none; border-radius:20px; padding:16px 24px; cursor:pointer; color:#fff;background:linear-gradient(135deg,#2563eb 0%,#0ea5e9 100%); font-size:22px; font-weight:1000; box-shadow:0 16px 28px rgba(37,99,235,.24);display:flex; align-items:center; justify-content:center; gap:10px;}
+.start-btn:hover{transform:translateY(-3px); filter:brightness(1.03)}
+.start-btn.secondary{background:linear-gradient(135deg,#10b981 0%,#22c55e 100%); box-shadow:0 16px 28px rgba(34,197,94,.20)}
+.start-btn.secondary:hover{transform:translateY(-3px)}
+.start-actions.column{flex-direction:row; gap:14px; align-items:center; flex-wrap:wrap}
+.start-note{margin-top:18px; text-align:center; color:var(--text-2); font-size:15px; font-weight:600}
+.exam-topbar{
+  width:min(95%,1480px); margin:10px auto 0; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+}
+.exam-user-badge,.exam-progress-badge{
+  background:#fff; border:1px solid var(--line-strong); border-radius:999px; padding:10px 18px; box-shadow:var(--shadow-soft); font-weight:800;
+}
+.exam-shell{display:flex; flex-direction:column; align-items:center; min-height:100dvh}
 .slide-container{
-  width:min(95%, 1480px);
-  height:calc(100dvh - 18px);
-  margin:9px auto;
-  background:linear-gradient(180deg,#ffffff 0%, #fbfdff 100%);
-  border:1px solid rgba(191,212,231,.85);
-  border-radius:var(--radius-xl);
-  box-shadow:var(--shadow);
-  padding:22px 28px 20px;
-  display:none;
-  flex-direction:column;
-  position:relative;
-  overflow:hidden;
+  width:min(95%,1480px); height:calc(100dvh - 90px); margin:9px auto 18px; background:linear-gradient(180deg,#ffffff 0%, #fbfdff 100%);
+  border:1px solid rgba(191,212,231,.85); border-radius:var(--radius-xl); box-shadow:var(--shadow);
+  padding:22px 28px 20px; display:none; flex-direction:column; position:relative; overflow:hidden;
 }
-.slide-container::before{
-  content:"";
-  position:absolute;
-  inset:0 0 auto 0;
-  height:6px;
-  background:linear-gradient(90deg,var(--primary),var(--accent),#22c55e);
-}
-.slide-container.active{display:flex;animation:slideIn .28s ease-out}
-.q-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  padding-bottom:14px;
-  margin-bottom:14px;
-  border-bottom:1px solid var(--line);
-}
-.header-left,.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.part-badge{
-  background:linear-gradient(135deg,var(--primary) 0%, var(--accent) 100%);
-  color:#fff;
-  padding:11px 22px;
-  border-radius:999px;
-  font-size:19px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-  box-shadow:0 10px 20px rgba(37,99,235,.24);
-}
-.zoom-btn,.timer,.btn-exit-html,.slide-counter,.btn-action,.btn-option,.btn-tf,input.answer-input{transition:all .2s ease}
-.zoom-btn{
-  width:44px;height:44px;border-radius:50%;
-  border:1px solid var(--line-strong);
-  background:#fff;color:var(--text-1);
-  font-size:22px;font-weight:800;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:var(--shadow-soft);
-}
+.slide-container::before{content:""; position:absolute; inset:0 0 auto 0; height:6px; background:linear-gradient(90deg,var(--primary),var(--accent),#22c55e)}
+.slide-container.active{display:flex; animation:slideIn .28s ease-out}
+.q-header{display:flex; justify-content:space-between; align-items:center; gap:16px; padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid var(--line)}
+.header-left,.header-right{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.part-badge{background:linear-gradient(135deg,var(--primary) 0%, var(--accent) 100%); color:#fff; padding:11px 22px; border-radius:999px; font-size:19px; font-weight:800; text-transform:uppercase; box-shadow:0 10px 20px rgba(37,99,235,.24)}
+.zoom-btn,.timer,.btn-exit-html,.slide-counter,.btn-action,.btn-option,.btn-tf,input.answer-input,#floatingSubmitBtn{transition:all .2s ease}
+.zoom-btn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:#fff;color:var(--text-1);font-size:22px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-soft)}
 .zoom-btn:hover{transform:translateY(-1px);background:#f6fbff;border-color:#9fc1df}
-.zoom-btn:active{transform:translateY(1px) scale(.98)}
-.timer{
-  font-size:22px;color:var(--text-1);font-weight:800;
-  background:linear-gradient(180deg,#ffffff 0%, #f4f9ff 100%);
-  padding:10px 22px;border-radius:999px;cursor:pointer;
-  border:1px solid var(--line-strong);box-shadow:var(--shadow-soft);
-  display:flex;align-items:center;gap:8px;min-width:190px;justify-content:center;
-}
-.timer:hover{background:#edf6ff}
-.timer.running{
-  color:#b91c1c;
-  background:linear-gradient(180deg,#fff4f4 0%, #fee2e2 100%);
-  border-color:#fca5a5;
-  animation:pulse 1s infinite;
-}
-.btn-exit-html{
-  background:linear-gradient(135deg,#fb7185 0%, var(--danger) 100%);
-  color:#fff;border:none;padding:10px 22px;border-radius:999px;
-  font-size:18px;font-weight:800;cursor:pointer;
-  box-shadow:0 12px 24px rgba(239,68,68,.22);
-}
-.btn-exit-html:hover{transform:translateY(-1px);filter:saturate(1.05)}
-.content-wrapper{
-  flex-grow:1;overflow-y:auto;padding-right:10px;padding-bottom:20px;
-  display:flex;flex-direction:column;
-}
+.timer{font-size:22px;color:var(--text-1);font-weight:800;background:linear-gradient(180deg,#ffffff 0%, #f4f9ff 100%);padding:10px 22px;border-radius:999px;cursor:pointer;border:1px solid var(--line-strong);box-shadow:var(--shadow-soft);display:flex;align-items:center;gap:8px;min-width:190px;justify-content:center}
+.timer.running{color:#b91c1c;background:linear-gradient(180deg,#fff4f4 0%, #fee2e2 100%);border-color:#fca5a5;animation:pulse 1s infinite}
+.btn-exit-html{background:linear-gradient(135deg,#fb7185 0%, var(--danger) 100%);color:#fff;border:none;padding:10px 22px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 12px 24px rgba(239,68,68,.22)}
+.content-wrapper{flex-grow:1;overflow-y:auto;padding-right:10px;padding-bottom:20px;display:flex;flex-direction:column}
 .content-wrapper::-webkit-scrollbar{width:10px}
 .content-wrapper::-webkit-scrollbar-thumb{background:#cfe0ef;border-radius:999px;border:2px solid #f6fbff}
-.content-wrapper::-webkit-scrollbar-track{background:transparent}
-.question-content{
-  font-size:var(--base-size);font-weight:600;color:var(--text-1);
-  margin-bottom:12px;line-height:1.55;text-align:justify;
-}
-.q-label{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:86px;padding:6px 14px;margin-right:10px;border-radius:999px;
-  color:#fff;background:linear-gradient(135deg,#f59e0b 0%, #f97316 100%);
-  font-weight:900;box-shadow:0 8px 18px rgba(249,115,22,.24);
-}
+.question-content{font-size:var(--base-size);font-weight:600;color:var(--text-1);margin-bottom:12px;line-height:1.55;text-align:justify}
+.q-label{display:inline-flex;align-items:center;justify-content:center;min-width:86px;padding:6px 14px;margin-right:10px;border-radius:999px;color:#fff;background:linear-gradient(135deg,#f59e0b 0%, #f97316 100%);font-weight:900;box-shadow:0 8px 18px rgba(249,115,22,.24)}
 mjx-container{font-size:var(--math-scale)!important;margin:0 3px!important}
 .img-container{text-align:center;margin:8px 0 14px;width:100%;padding:10px 0}
-.real-image{
-  display:inline-block;max-width:92%;height:auto;max-height:410px;
-  border-radius:18px;border:1px solid #cfe0ef;background:#fff;
-  box-shadow:var(--shadow-soft);padding:6px;cursor:zoom-in;
-}
-.img-hint{font-size:13px;color:var(--text-2);font-style:italic;margin-top:6px}
-.table-container{
-  width:100%;overflow-x:auto;margin:18px 0;display:flex;justify-content:center;
-}
-.styled-table{
-  border-collapse:collapse;background:#fff;border:1px solid #cdddeb;min-width:60%;
-  text-align:center;box-shadow:var(--shadow-soft);border-radius:16px;overflow:hidden;
-}
-.styled-table th,.styled-table td{
-  border:1px solid #e2edf6;padding:12px 18px;font-size:var(--base-size);color:var(--text-1);
-}
-.styled-table th{background:linear-gradient(180deg,#f5faff 0%, #edf6ff 100%);font-weight:800}
-.options-grid-4,.options-grid-2,.options-grid-1{gap:16px;margin:10px 0 20px}
-.options-grid-4{display:grid;grid-template-columns:repeat(4,1fr)}
-.options-grid-2{display:grid;grid-template-columns:repeat(2,1fr)}
-.options-grid-1{display:grid;grid-template-columns:1fr}
-.btn-option{
-  background:linear-gradient(180deg,#ffffff 0%, #f9fcff 100%);
-  border:1px solid var(--line-strong);padding:16px 16px;font-size:var(--opt-size);
-  border-radius:18px;cursor:pointer;text-align:left;font-weight:600;color:var(--text-1);
-  display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-soft);
-}
+.real-image{display:inline-block;max-width:92%;height:auto;max-height:410px;border-radius:18px;border:1px solid #cfe0ef;background:#fff;box-shadow:var(--shadow-soft);padding:6px;cursor:zoom-in}
+.options-stack{display:flex;flex-direction:column;gap:12px;width:100%}
+.options-stack .btn-option{width:100%;display:flex;align-items:flex-start}
+.options-stack .opt-text{flex:1}
+.btn-option{background:linear-gradient(180deg,#ffffff 0%, #f9fcff 100%);border:1px solid var(--line-strong);padding:16px 16px;font-size:var(--opt-size);border-radius:18px;cursor:pointer;text-align:left;font-weight:600;color:var(--text-1);display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-soft)}
 .btn-option:hover{transform:translateY(-2px);border-color:#9fc1df;background:#ffffff}
-.btn-option:active{transform:translateY(0)}
-.opt-badge{
-  width:var(--badge-size);height:var(--badge-size);
-  background:linear-gradient(135deg,var(--success) 0%, #22c55e 100%);
-  color:#fff;border-radius:14px;display:flex;justify-content:center;align-items:center;
-  font-weight:900;flex-shrink:0;box-shadow:0 10px 18px rgba(34,197,94,.18);
-}
-.btn-option.correct{
-  background:linear-gradient(180deg,#f0fdf4 0%, #dcfce7 100%)!important;
-  border-color:#86efac!important;color:#14532d!important;
-}
-.btn-option.correct .opt-badge{background:linear-gradient(135deg,#15803d 0%, #16a34a 100%)}
-.btn-option.wrong{
-  opacity:.72;background:linear-gradient(180deg,#fff5f5 0%, #fee2e2 100%)!important;
-  border-color:#fca5a5!important;
-}
-.btn-option.wrong .opt-badge{background:linear-gradient(135deg,#b91c1c 0%, #ef4444 100%)}
-.btn-option.disabled{pointer-events:none}
+.opt-badge{width:var(--badge-size);height:var(--badge-size);background:linear-gradient(135deg,var(--success) 0%, #22c55e 100%);color:#fff;border-radius:14px;display:flex;justify-content:center;align-items:center;font-weight:900;flex-shrink:0;box-shadow:0 10px 18px rgba(34,197,94,.18)}
+.btn-option.selected-answer{border-color:#60a5fa!important;background:linear-gradient(180deg,#eff6ff 0%, #dbeafe 100%)!important}
+.btn-option.correct{border-color:#86efac!important;background:linear-gradient(180deg,#f0fdf4 0%, #dcfce7 100%)!important}
+.btn-option.wrong{border-color:#fca5a5!important;background:linear-gradient(180deg,#fff5f5 0%, #fee2e2 100%)!important}
 .tf-container{display:flex;flex-direction:column;gap:14px;margin:8px 0 22px}
-.tf-row{
-  display:flex;align-items:center;justify-content:space-between;gap:18px;
-  background:linear-gradient(180deg,#ffffff 0%, #f9fcff 100%);
-  padding:16px 18px;border-radius:18px;border:1px solid #dbe7f3;box-shadow:var(--shadow-soft);
-}
+.tf-row{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(180deg,#ffffff 0%, #f9fcff 100%);padding:16px 18px;border-radius:18px;border:1px solid #dbe7f3;box-shadow:var(--shadow-soft)}
 .tf-content{font-size:var(--opt-size);font-weight:600;color:var(--text-1);flex-grow:1}
 .tf-buttons{display:flex;gap:12px;min-width:180px}
-.btn-tf{
-  border:1px solid var(--line-strong);background:linear-gradient(180deg,#ffffff 0%, #f4f9ff 100%);
-  padding:11px 0;border-radius:12px;font-weight:900;cursor:pointer;flex:1;color:var(--text-2);
-  text-align:center;font-size:22px;box-shadow:var(--shadow-soft);
-}
-.btn-tf:hover{transform:translateY(-1px);border-color:#9fc1df}
+.btn-tf{border:1px solid var(--line-strong);background:linear-gradient(180deg,#ffffff 0%, #f4f9ff 100%);padding:11px 0;border-radius:12px;font-weight:900;cursor:pointer;flex:1;color:var(--text-2);text-align:center;font-size:22px;box-shadow:var(--shadow-soft)}
+.btn-tf.selected-answer{border-color:#60a5fa!important;background:#dbeafe!important;color:#1d4ed8!important}
 .btn-tf.user-correct{background:linear-gradient(135deg,#22c55e 0%, #16a34a 100%)!important;color:#fff!important;border-color:#16a34a!important}
 .btn-tf.user-wrong{background:linear-gradient(135deg,#f87171 0%, #ef4444 100%)!important;color:#fff!important;border-color:#dc2626!important}
 .btn-tf.reveal-true{border:2px solid #22c55e!important;color:#166534!important;background:#ecfdf5!important}
 .btn-tf.reveal-false{border:2px solid #ef4444!important;color:#b91c1c!important;background:#fef2f2!important}
-.short-answer-area{
-  display:flex;flex-direction:column;align-items:center;margin:6px 0 28px;width:100%;
-}
+.short-answer-area{display:flex;flex-direction:column;align-items:center;margin:6px 0 28px;width:100%}
 .input-group{position:relative;width:min(74%, 820px)}
-input.answer-input{
-  width:100%;padding:18px 24px;font-size:30px;border:2px solid #cdddeb;border-radius:18px;
-  outline:none;text-align:center;font-weight:800;color:var(--text-1);
-  background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);box-shadow:var(--shadow-soft);
-}
-input.answer-input:focus{
-  border-color:#93c5fd;background:#fff;box-shadow:0 0 0 5px rgba(59,130,246,.12);
-}
-.explanation-box{
-  display:none;margin-top:18px;padding:22px 24px;
-  background:linear-gradient(180deg,#f4fbff 0%, #e9f7ff 100%);
-  border:1px solid #bae6fd;border-left:8px solid var(--accent);
-  border-radius:18px;animation:fadeIn .35s;box-shadow:var(--shadow-soft);
-}
-.explanation-title{
-  font-weight:900;color:#0369a1;margin-bottom:10px;font-size:26px;
-  display:flex;align-items:center;gap:10px;
-}
+input.answer-input{width:100%;padding:18px 24px;font-size:30px;border:2px solid #cdddeb;border-radius:18px;outline:none;text-align:center;font-weight:800;color:var(--text-1);background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);box-shadow:var(--shadow-soft)}
+input.answer-input:focus{border-color:#93c5fd;background:#fff;box-shadow:0 0 0 5px rgba(59,130,246,.12)}
+.explanation-box{display:none;margin-top:18px;padding:22px 24px;background:linear-gradient(180deg,#f4fbff 0%, #e9f7ff 100%);border:1px solid #bae6fd;border-left:8px solid var(--accent);border-radius:18px;animation:fadeIn .35s;box-shadow:var(--shadow-soft)}
+.explanation-title{font-weight:900;color:#0369a1;margin-bottom:10px;font-size:26px;display:flex;align-items:center;gap:10px}
 .explanation-content{font-size:var(--opt-size);color:var(--text-1);line-height:1.65}
-.actions-area{
-  display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;
-  margin-top:auto;padding-top:16px;border-top:1px solid var(--line);
-}
-.btn-action{
-  color:#fff;border:none;padding:12px 22px;font-size:18px;font-weight:800;border-radius:14px;
-  cursor:pointer;min-width:170px;display:flex;align-items:center;justify-content:center;gap:10px;
-  box-shadow:0 12px 22px rgba(15,23,42,.12);
-}
-.btn-action:hover{transform:translateY(-2px)}
-.btn-action:active{transform:translateY(0)}
+.actions-area{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+.btn-action{color:#fff;border:none;padding:12px 22px;font-size:18px;font-weight:800;border-radius:14px;cursor:pointer;min-width:170px;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 12px 22px rgba(15,23,42,.12)}
 .btn-reveal{background:linear-gradient(135deg,#f59e0b 0%, #f97316 100%)}
 .btn-check{background:linear-gradient(135deg,#3b82f6 0%, var(--primary-2) 100%)}
 .btn-explain{background:linear-gradient(135deg,#10b981 0%, #059669 100%)}
-.slide-counter{
-  font-size:18px;font-weight:900;color:var(--text-1);
-  background:linear-gradient(180deg,#ffffff 0%, #edf6ff 100%);
-  padding:10px 22px;border-radius:999px;border:1px solid #d7e6f3;box-shadow:var(--shadow-soft);
-}
-.nav-arrow{
-  position:fixed;top:50%;transform:translateY(-50%);
-  width:58px;height:74px;background:rgba(37,99,235,.16);color:#fff;font-size:34px;border:none;
-  border-radius:18px;cursor:pointer;transition:.25s;z-index:100;display:flex;justify-content:center;
-  align-items:center;backdrop-filter:blur(10px);box-shadow:0 12px 28px rgba(37,99,235,.18);
-}
+.slide-counter{font-size:18px;font-weight:900;color:var(--text-1);background:linear-gradient(180deg,#ffffff 0%, #edf6ff 100%);padding:10px 22px;border-radius:999px;border:1px solid #d7e6f3;box-shadow:var(--shadow-soft)}
+.nav-arrow{position:fixed;top:50%;transform:translateY(-50%);width:58px;height:74px;background:rgba(37,99,235,.16);color:#fff;font-size:34px;border:none;border-radius:18px;cursor:pointer;transition:.25s;z-index:100;display:flex;justify-content:center;align-items:center;backdrop-filter:blur(10px);box-shadow:0 12px 28px rgba(37,99,235,.18)}
 .nav-arrow:hover{background:rgba(37,99,235,.9);transform:translateY(-50%) scale(1.04)}
-.nav-prev{left:10px}
-.nav-next{right:10px}
-.feedback-popup{
-  position:absolute;top:45%;left:50%;transform:translate(-50%,-50%) scale(.75);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;z-index:9999;
-  pointer-events:none;transition:all .35s cubic-bezier(.175,.885,.32,1.275);
-  filter:drop-shadow(0 18px 30px rgba(15,23,42,.2));background:rgba(255,255,255,.96);
-  padding:20px 44px;border-radius:28px;text-align:center;border:4px solid transparent;backdrop-filter:blur(8px);
-}
-.feedback-popup.correct{border-color:#4ade80;color:#15803d}
-.feedback-popup.wrong{border-color:#f87171;color:#b91c1c}
-.feedback-popup .emoji{font-size:92px;line-height:1;margin-bottom:10px}
-.feedback-popup .message{font-size:36px;font-weight:900;white-space:nowrap}
+.nav-prev{left:10px}.nav-next{right:10px}
+#floatingSubmitBtn{position:fixed;right:18px;bottom:18px;z-index:150;background:linear-gradient(135deg,#16a34a 0%,#22c55e 100%);color:#fff;border:none;border-radius:999px;padding:16px 24px;font-size:20px;font-weight:900;box-shadow:0 18px 30px rgba(34,197,94,.24);cursor:pointer}
+#floatingSubmitBtn:hover{transform:translateY(-2px)}
+.result-overlay{position:fixed; inset:0; background:rgba(15,23,42,.38); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:18px; z-index:300}
+.result-overlay.show{display:flex}
+.result-card{width:min(96%,1200px); max-height:92dvh; overflow:auto; background:#fff; border-radius:28px; box-shadow:var(--shadow); border:1px solid var(--line-strong); padding:26px}
+.result-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:16px}
+.result-title{font-size:34px; font-weight:900; color:#16324f}
+.result-summary{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin:14px 0 18px}
+.summary-box{background:#f8fbff; border:1px solid #dbe7f3; border-radius:18px; padding:14px 16px; box-shadow:var(--shadow-soft)}
+.summary-box .k{font-size:14px; color:var(--text-2); margin-bottom:6px}.summary-box .v{font-size:28px; font-weight:900}
+.result-table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:18px; box-shadow:var(--shadow-soft)}
+.result-table th,.result-table td{border:1px solid #dbe7f3; padding:10px 12px; font-size:16px; vertical-align:top}
+.result-table th{background:#eff6ff; text-align:center}
+.result-table td:nth-child(1),.result-table td:nth-child(2),.result-table td:nth-child(5),.result-table td:nth-child(6){text-align:center}
+.badge-ok,.badge-no{display:inline-flex; align-items:center; justify-content:center; min-width:88px; padding:6px 10px; border-radius:999px; font-weight:800}
+.badge-ok{background:#dcfce7; color:#166534}.badge-no{background:#fee2e2; color:#b91c1c}
+.result-actions{display:flex; justify-content:flex-end; gap:12px; flex-wrap:wrap; margin-top:18px}
+.result-btn{border:none; border-radius:14px; padding:12px 18px; font-size:16px; font-weight:800; cursor:pointer}
+.result-btn.primary{background:#2563eb; color:#fff}.result-btn.gray{background:#e5eef8; color:#16324f}
+.ranking-overlay{position:fixed; inset:0; background:rgba(15,23,42,.38); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:18px; z-index:310}
+.ranking-overlay.show{display:flex}
+.ranking-card{width:min(96%,1000px); max-height:92dvh; overflow:auto; background:#fff; border-radius:28px; box-shadow:var(--shadow); border:1px solid var(--line-strong); padding:26px}
+.ranking-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:16px}
+.ranking-title{font-size:34px; font-weight:900; color:#16324f}
+.ranking-note{color:#49627d; font-size:15px; margin-top:6px}
+.ranking-empty{padding:26px; text-align:center; color:var(--text-2); font-size:18px; background:#f8fbff; border:1px dashed #bfd4e7; border-radius:18px}
+.rank-badge{display:inline-flex; align-items:center; justify-content:center; min-width:42px; height:42px; border-radius:50%; font-weight:900; color:#fff}
+.rank-1{background:linear-gradient(135deg,#f59e0b 0%,#f97316 100%)}
+.rank-2{background:linear-gradient(135deg,#94a3b8 0%,#64748b 100%)}
+.rank-3{background:linear-gradient(135deg,#b45309 0%,#92400e 100%)}
+.rank-other{background:linear-gradient(135deg,#60a5fa 0%,#2563eb 100%)}
+
+.feedback-popup{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%) scale(.75);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;z-index:9999;pointer-events:none;transition:all .35s cubic-bezier(.175,.885,.32,1.275);filter:drop-shadow(0 18px 30px rgba(15,23,42,.2));background:rgba(255,255,255,.96);padding:20px 44px;border-radius:28px;text-align:center;border:4px solid transparent;backdrop-filter:blur(8px)}
+.feedback-popup.correct{border-color:#4ade80;color:#15803d}.feedback-popup.wrong{border-color:#f87171;color:#b91c1c}.feedback-popup .emoji{font-size:92px;line-height:1;margin-bottom:10px}.feedback-popup .message{font-size:36px;font-weight:900;white-space:nowrap}
 .feedback-popup.pop{transform:translate(-50%,-50%) scale(1);opacity:1}
 @keyframes slideIn{from{opacity:0;transform:translateY(18px) scale(.995)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(248,113,113,.35)}70%{box-shadow:0 0 0 14px rgba(248,113,113,0)}100%{box-shadow:0 0 0 0 rgba(248,113,113,0)}}
-@media (max-width:1024px){
-  :root{--base-size:26px;--opt-size:23px;--badge-size:44px;--math-scale:106%}
-  .options-grid-4{grid-template-columns:repeat(2,1fr)}
-}
+@media (max-width:1024px){:root{--base-size:26px;--opt-size:23px;--badge-size:44px;--math-scale:106%}}
 @media (max-width:768px){
   :root{--base-size:20px;--opt-size:18px;--badge-size:36px;--math-scale:100%}
-  .slide-container{width:100%;height:100dvh;padding:14px;border-radius:0;margin:0;border:none}
-  .q-header{flex-direction:column;align-items:stretch}
-  .header-left,.header-right{justify-content:space-between;width:100%}
-  .part-badge{font-size:15px;padding:8px 14px}
-  .btn-exit-html,.timer{font-size:15px;padding:8px 14px;min-width:118px}
-  .zoom-btn{width:36px;height:36px;font-size:18px}
-  .table-container{justify-content:flex-start}
-  .styled-table{min-width:100%}
-  .styled-table th,.styled-table td{padding:8px 10px}
-  .options-grid-4,.options-grid-2{grid-template-columns:1fr;gap:10px;margin-bottom:12px}
-  .btn-option{padding:12px}
-  .tf-row{flex-direction:column;align-items:stretch}
-  .tf-content{margin-bottom:8px}
-  .tf-buttons{min-width:100%}
-  .input-group{width:100%}
-  input.answer-input{font-size:24px;padding:15px}
-  .nav-arrow{display:none}
-  .actions-area{gap:10px}
-  .btn-action{flex:1;min-width:130px;font-size:15px;padding:10px}
-  .slide-counter{font-size:15px;width:100%;text-align:center;order:3;margin-top:4px}
-  .slide-counter::after{
-    content:"👈 Vuốt ngang để chuyển câu 👉";
-    display:block;font-size:13px;font-weight:700;color:#0f766e;margin-top:5px;
+  .start-hero{flex-direction:column;text-align:center}.start-title{text-align:center;font-size:29px}.start-logo{width:64px;height:64px;font-size:34px}.exam-info-grid{grid-template-columns:1fr}.start-btn{width:100%; font-size:20px}.start-actions.column{align-items:stretch;flex-direction:column}.start-input{font-size:20px}
+  .exam-topbar{width:100%; padding:0 12px}.slide-container{width:100%;height:calc(100dvh - 78px);padding:14px;border-radius:0;margin:0;border:none}
+  .q-header{flex-direction:column;align-items:stretch}.header-left,.header-right{justify-content:space-between;width:100%}
+  .part-badge{font-size:15px;padding:8px 14px}.btn-exit-html,.timer{font-size:15px;padding:8px 14px;min-width:118px}.zoom-btn{width:36px;height:36px;font-size:18px}
+  .tf-row{flex-direction:column;align-items:stretch}.tf-content{margin-bottom:8px}.tf-buttons{min-width:100%}.input-group{width:100%}
+  input.answer-input{font-size:24px;padding:15px}.nav-arrow{display:none}.actions-area{gap:10px}.btn-action{flex:1;min-width:130px;font-size:15px;padding:10px}.slide-counter{font-size:15px;width:100%;text-align:center;order:3;margin-top:4px}
+  #floatingSubmitBtn{left:12px; right:12px; bottom:12px; border-radius:18px}
+}
+</style>
+<script>
+MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']], processEscapes: true }, chtml: { scale: 1, matchFontHeight: false } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style id="imath-options-stack-style">.options-stack{display:flex;flex-direction:column;gap:12px;width:100%;}.options-stack .btn-option{width:100%;display:flex;align-items:flex-start;}.options-stack .opt-text{flex:1;}</style></head>
+<body class="before-start before-submit">
+<div id="startScreen" class="start-screen">
+  <div class="start-card">
+    <div class="start-hero">
+      <div class="start-logo">∑</div>
+      <div>
+        <div class="start-title">TRẮC NGHIỆM MÔN TOÁN ONLINE</div>
+        <div class="start-subtitle">Sẵn sàng chinh phục từng câu hỏi — tự tin vào thi!</div>
+      </div>
+    </div>
+
+    <div class="exam-info-grid">
+      <div class="exam-info-item">
+        <div class="exam-info-icon">🏆</div>
+        <div class="exam-info-text">
+          <div class="exam-info-label">Tên kỳ thi</div>
+          <div class="exam-info-value" id="examNameDisplay">ĐỀ ÔN TẬP</div>
+        </div>
+      </div>
+      <div class="exam-info-item">
+        <div class="exam-info-icon">📐</div>
+        <div class="exam-info-text">
+          <div class="exam-info-label">Môn thi</div>
+          <div class="exam-info-value" id="subjectDisplay">TOÁN 10</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="student-panel">
+      <div class="start-group">
+        <label for="studentNameInput" class="start-label">👤 Họ tên học sinh</label>
+        <div class="input-wrap">
+          <span class="input-icon">✍️</span>
+          <input id="studentNameInput" class="start-input" type="text" placeholder="Nhập họ và tên học sinh" autocomplete="name">
+        </div>
+      </div>
+    </div>
+
+    <div class="start-actions column">
+      <button class="start-btn" onclick="startExam()"><span>🚀</span><span>Vào thi</span></button>
+      <button class="start-btn secondary" onclick="openRankingBoard()"><span>🥇</span><span>Bảng xếp hạng</span></button>
+    </div>
+    <div class="start-note">Kết quả được lưu trong trình duyệt để phục vụ thống kê và xếp hạng.</div>
+  </div>
+</div>
+
+<audio id="bgMusic" preload="auto"></audio>
+
+<div class="exam-shell">
+  <div class="exam-topbar">
+    <div id="studentBadge" class="exam-user-badge">👤 Học sinh: Chưa nhập</div>
+    <div id="progressBadge" class="exam-progress-badge">📝 Tiến độ: 0/0 câu</div>
+  </div>
+
+  <button class="nav-arrow nav-prev" onclick="prevSlide()" title="Câu trước">❮</button>
+  <button class="nav-arrow nav-next" onclick="nextSlide()" title="Câu sau">❯</button>
+
+  <button id="floatingSubmitBtn" onclick="submitExam()">NỘP BÀI</button>
+
+  <div class="slide-container" id="slide-0"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 1:</span> Một lớp học có ${14}$ học sinh nam và ${10}$ học sinh nữ. Chọn ngẫu nhiên ${5}$ học sinh của lớp. Xác suất để có đúng ${3}$ học sinh nữ là</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{1}{154}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{13}{6072}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{211}{42504}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{65}{253}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-0">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một lớp học có ${14}$ học sinh nam và ${10}$ học sinh nữ.  Chọn ngẫu nhiên ${5}$ học sinh của lớp. Xác suất để có đúng ${3}$ học sinh nữ là<br><br>A. ${\frac{1}{154}}$.	   B. ${\frac{13}{6072}}$.	     C. ${\frac{211}{42504}}$.	     D. ${\frac{65}{253}}$.<br><br>Lời giải:<br> Chọn D<br>Số phần tử của không gian mẫu là: $C^{5}_{24}=42504$.<br><br>Số cách chọn ${5}$ học sinh của lớp trong đó có đúng ${3}$ học sinh nữ là: $C^{2}_{14}.C^{3}_{10}=10920$.<br><br>Xác suất để có đúng ${3}$ học sinh nữ được chọn là: $P=\dfrac{10920}{42504}=\frac{65}{253}$</div></div></div></div><div class="slide-container" id="slide-1"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 2:</span> Một nhà sách có ${12}$ cuốn sách tham khảo môn Hóa Học 10 và ${15}$ cuốn sách tham khảo môn Toán 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${9}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 được chọn là</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{6}{95}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{308}{1311}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{896}{897}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{1533}{24035}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-1">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một nhà sách có ${12}$ cuốn sách tham khảo môn Hóa Học 10 và ${15}$ cuốn sách tham khảo môn Toán 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${9}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 được chọn là<br><br>A. ${\frac{6}{95}}$.	   B. ${\frac{308}{1311}}$.	     C. ${\frac{896}{897}}$.	     D. ${\frac{1533}{24035}}$.<br><br>Lời giải:<br> Chọn C<br>Số phần tử của không gian mẫu là: $C^{9}_{27}=4686825$.<br><br>Số cách chọn có cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 là: $C^{9}_{27}-C^{9}_{12}-C^{9}_{15}=\frac{896}{897}$.<br><br>Xác suất để cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 được chọn là: $P=\dfrac{4681600}{4686825}=\frac{896}{897}$</div></div></div></div><div class="slide-container" id="slide-2"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 3:</span> Một hộp chứa 15 thẻ được đánh số từ 1 đến 15. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;13]}$”. Xác suất của biến cố ${A}$ là</div><div class="options-stack"><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{13}{15}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${1}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{14}{15}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{6}{5}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-2">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một hộp chứa 15 thẻ được đánh số từ 1 đến 15. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;13]}$”. Xác suất của biến cố ${A}$ là<br><br>A. ${\frac{13}{15}}$.	   B. ${1}$.	     C. ${\frac{14}{15}}$.	     D. ${\frac{6}{5}}$.<br><br>Lời giải:<br> Chọn A <br> Số phần tử của không gian mẫu là: $n(\Omega)=15$.<br><br>$n(A)=13-1+1=13$.<br><br> Xác suất của biến cố ${A}$ là $P=\dfrac{13}{15}=\frac{13}{15}$.</div></div></div></div><div class="slide-container" id="slide-3"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 4:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 9”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{29}{36}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{13}{18}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{2}{3}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{3}{4}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-3">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 9”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{29}{36}}$.	   B. ${\frac{13}{18}}$.	     C. ${\frac{2}{3}}$.	     D. ${\frac{3}{4}}$.<br><br>Lời giải:<br> Chọn B <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(1;1), (1;2), (1;3), (1;4), (1;5), (1;6), (2;1), (2;2), (2;3), (2;4), (2;5), (2;6), (3;1), (3;2), (3;3), (3;4), (3;5), (4;1), (4;2), (4;3), (4;4), (5;1), (5;2), (5;3), (6;1), (6;2)\}$. <br><br> Vậy số phần tử của biến cố ${A}$ là ${26}$.<br><br> Xác suất của biến cố ${A}$ là: $P=\dfrac{26}{36}=\frac{13}{18}$.</div></div></div></div><div class="slide-container" id="slide-4"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 5:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 6”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{19}{36}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{1}{4}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{7}{12}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{2}{3}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-4">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 6”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{19}{36}}$.	   B. ${\frac{1}{4}}$.	     C. ${\frac{7}{12}}$.	     D. ${\frac{2}{3}}$.<br><br>Lời giải:<br> Chọn C <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(1;6), (2;5), (2;6), (3;4), (3;5), (3;6), (4;3), (4;4), (4;5), (4;6), (5;2), (5;3), (5;4), (5;5), (5;6), (6;1), (6;2), (6;3), (6;4), (6;5), (6;6)\}$. <br><br> Vậy số phần tử của biến cố ${A}$ là ${21}$.<br><br> Xác suất của biến cố ${A}$ là: $P=\dfrac{21}{36}=\frac{7}{12}$.</div></div></div></div><div class="slide-container" id="slide-5"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 6:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 7”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{1}{6}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{1}{4}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{1}{9}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{1}{2}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-5">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 7”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{1}{6}}$.	   B. ${\frac{1}{4}}$.	     C. ${\frac{1}{9}}$.	     D. ${\frac{1}{2}}$.<br><br>Lời giải:<br> Chọn A <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(1;6), (2;5), (3;4), (4;3), (5;2), (6;1)\}$. <br><br> Vậy số phần tử của biến cố ${A}$ là ${6}$.<br><br> Xác suất của biến cố ${A}$ là: $P=\dfrac{6}{36}=\frac{1}{6}$.</div></div></div></div><div class="slide-container" id="slide-6"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 7:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{5}{36}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{5}{18}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{11}{36}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{7}{12}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-6">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{5}{36}}$.	   B. ${\frac{5}{18}}$.	     C. ${\frac{11}{36}}$.	     D. ${\frac{7}{12}}$.<br><br>Lời giải:<br> Chọn A <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(2;6), (3;5), (4;4), (5;3), (6;2)\}$. <br><br> Số phần tử của biến cố ${A}$ là ${5}$. Xác suất của biến cố ${A}$ là: $P=\dfrac{5}{36}=\frac{5}{36}$.</div></div></div></div><div class="slide-container" id="slide-7"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 8:</span> Một hộp chứa 17 quả cầu cùng kích thước được đánh số từ 1 đến 17. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{9}{17}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{8}{17}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{11}{17}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{13}{17}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-7">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một hộp chứa 17 quả cầu cùng kích thước được đánh số từ 1 đến 17. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.<br><br>A. ${\frac{9}{17}}$.	   B. ${\frac{8}{17}}$.	     C. ${\frac{11}{17}}$.	     D. ${\frac{13}{17}}$.<br><br>Lời giải:<br> Chọn B <br> Số phần tử của không gian mẫu là: $n(\Omega)=17$.<br><br>Gọi ${A}$ là biến cố số ghi trên quả cầu được là một số chẵn.<br><br>${A}=\{2, 4, 6, 8, 10, 12, 14, 16\}\Rightarrow n(A)=8$.<br><br>Xác suất của biến cố ${A}$ là: $P=\dfrac{8}{17}=\frac{8}{17}$.</div></div></div></div><div class="slide-container" id="slide-8"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 9:</span> Một hộp chứa 27 quả cầu cùng kích thước được đánh số từ 1 đến 27. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 10” bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{1}{9}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{2}{27}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{2}{9}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{8}{27}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-8">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một hộp chứa 27 quả cầu cùng kích thước được đánh số từ 1 đến 27. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 10” bằng<br><br>A. ${\frac{1}{9}}$.	   B. ${\frac{2}{27}}$.	     C. ${\frac{2}{9}}$.	     D. ${\frac{8}{27}}$.<br><br>Lời giải:<br> Chọn B <br> Số phần tử của không gian mẫu là: $n(\Omega)=27$.<br><br>Gọi ${A}$ là biến cố số ghi trên quả cầu được chọn vừa là một số chẵn và chia hết cho 10.<br><br>${A}=\{10, 20\}\Rightarrow n(A)=2$.<br><br>Xác suất của biến cố ${A}$ là: $P=\dfrac{2}{27}=\frac{2}{27}$.</div></div></div></div><div class="slide-container" id="slide-9"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 10:</span> Một đội có ${6}$ bạn nam và ${6}$ bạn nữ, giáo viên chọn ngẫu nhiên ${3}$ bạn tham gia thi đấu võ thuật của tỉnh. Xác suất chọn được ${3}$ bạn nam là:</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{4}{45}} $.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{1}{11} }$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{10}{111}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{5}{56}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-9">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một đội có ${6}$ bạn nam và ${6}$ bạn nữ, giáo viên chọn ngẫu nhiên ${3}$ bạn tham gia thi đấu võ thuật của tỉnh. Xác suất chọn được ${3}$ bạn nam là:<br><br>A.  ${\frac{4}{45}} $.	   B. ${\frac{1}{11} }$.	     C.  ${\frac{10}{111}}$.	     D.  ${\frac{5}{56}}$.<br><br>Lời giải:<br> Chọn B<br> ${n(\Omega)= C^{3}_{12} =220}$ <br><br> ${n(A)=C^{3}_{6}=20 }$ <br><br> ${P(A) = \dfrac{1}{11}}$</div></div></div></div>
+</div>
+
+<div id="resultOverlay" class="result-overlay">
+  <div class="result-card">
+    <div class="result-head">
+      <div>
+        <div class="result-title">KẾT QUẢ BÀI LÀM</div>
+        <div id="resultStudentLine" style="margin-top:6px;color:#49627d;font-size:17px;font-weight:700"></div>
+      </div>
+    </div>
+    <div id="resultSummary" class="result-summary"></div>
+    <div style="overflow:auto">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Loại</th>
+            <th>Nội dung trả lời</th>
+            <th>Đáp án đúng</th>
+            <th>Kết quả</th>
+            <th>Điểm</th>
+          </tr>
+        </thead>
+        <tbody id="resultTableBody"></tbody>
+      </table>
+    </div>
+    <div class="result-actions">
+      <button class="result-btn gray" onclick="returnToHome()">VỀ TRANG CHỦ</button>
+      <button class="result-btn gray" onclick="closeResultOverlay()">Đóng</button>
+      <button class="result-btn primary" onclick="window.print()">In kết quả</button>
+    </div>
+  </div>
+</div>
+
+<div id="rankingOverlay" class="ranking-overlay">
+  <div class="ranking-card">
+    <div class="ranking-head">
+      <div>
+        <div class="ranking-title">BẢNG XẾP HẠNG</div>
+        <div class="ranking-note" id="rankingSourceNote">Nguồn dữ liệu: chưa chọn file lưu kết quả.</div>
+      </div>
+    </div>
+    <div style="overflow:auto">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>Hạng</th>
+            <th>Học sinh</th>
+            <th>Tổng điểm</th>
+            <th>Lần nộp</th>
+            <th>Thời điểm</th>
+          </tr>
+        </thead>
+        <tbody id="rankingTableBody"></tbody>
+      </table>
+    </div>
+    <div id="rankingEmpty" class="ranking-empty" style="display:none">Chưa có dữ liệu xếp hạng.</div>
+    <div class="result-actions">
+      <button class="result-btn gray" onclick="closeRankingOverlay()">Đóng</button>
+      <button class="result-btn gray" onclick="selectScoreFile()">Chọn file kết quả</button>
+      <button class="result-btn primary" onclick="createScoreFile()">Tạo file kết quả mới</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentSlide = 0, slides = [], timerInterval = null, examStarted = false, examSubmitted = false;
+let audioCtx = null;
+const SCORE_FILE_NAME = 'Bang_xep_hang_imath.json';
+let scoreFileHandle = null;
+const MUSIC_FILES = ["music_1.mp3", "music_2.mp3", "music_3.mp3"];
+let bgMusic = null;
+let currentMusicIndex = -1;
+let musicEnabled = true;
+
+function getAudioCtx(){ if(!audioCtx){ const Ctx = window.AudioContext || window.webkitAudioContext; if(Ctx) audioCtx = new Ctx(); } return audioCtx; }
+function playSound(type){
+  const ctx = getAudioCtx(); if(!ctx) return; if(ctx.state === 'suspended') ctx.resume();
+  const osc = ctx.createOscillator(), gain = ctx.createGain(), now = ctx.currentTime;
+  osc.connect(gain); gain.connect(ctx.destination);
+  if(type === 'correct'){ osc.type='sine'; osc.frequency.setValueAtTime(800,now); osc.frequency.exponentialRampToValueAtTime(1200,now+.1); gain.gain.setValueAtTime(.35,now); gain.gain.exponentialRampToValueAtTime(.01,now+.25); }
+  else if(type === 'wrong'){ osc.type='sawtooth'; osc.frequency.setValueAtTime(180,now); osc.frequency.exponentialRampToValueAtTime(110,now+.18); gain.gain.setValueAtTime(.28,now); gain.gain.exponentialRampToValueAtTime(.01,now+.25); }
+  else { osc.type='square'; osc.frequency.setValueAtTime(420,now); gain.gain.setValueAtTime(.25,now); gain.gain.exponentialRampToValueAtTime(.01,now+.4); }
+  osc.start(now); osc.stop(now+.4);
+}
+
+function setupBackgroundMusic(){
+  bgMusic = document.getElementById('bgMusic');
+  if(!bgMusic) return;
+  bgMusic.volume = 0.35;
+  bgMusic.addEventListener('ended', ()=>{
+    if(examStarted && !examSubmitted && musicEnabled){
+      playRandomBackgroundMusic();
+    }
+  });
+  bgMusic.addEventListener('error', ()=>{
+    console.log('Không phát được file nhạc:', bgMusic?.src || '');
+    if(examStarted && !examSubmitted && musicEnabled){
+      playRandomBackgroundMusic(true);
+    }
+  });
+}
+function stopBackgroundMusic(){
+  if(!bgMusic) return;
+  try{ bgMusic.pause(); }catch(e){}
+  try{ bgMusic.currentTime = 0; }catch(e){}
+}
+function playRandomBackgroundMusic(forceDifferent=false){
+  if(!musicEnabled) return;
+  if(!bgMusic) setupBackgroundMusic();
+  if(!bgMusic) return;
+  const files = Array.isArray(MUSIC_FILES) ? MUSIC_FILES.filter(Boolean) : [];
+  if(!files.length) return;
+  let idx = Math.floor(Math.random() * files.length);
+  if(forceDifferent && files.length > 1 && idx === currentMusicIndex){
+    idx = (idx + 1 + Math.floor(Math.random() * (files.length - 1))) % files.length;
+  }
+  currentMusicIndex = idx;
+  const chosen = files[idx];
+  bgMusic.src = encodeURI(chosen);
+  bgMusic.load();
+  const p = bgMusic.play();
+  if(p && typeof p.then === 'function'){
+    p.catch(err => console.log('Trình duyệt chặn phát nhạc hoặc không tìm thấy file:', chosen, err));
   }
 }
 
-.draw-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.draw-sep{width:1px;height:34px;background:#d6e3f0;margin:0 2px}
-.draw-btn,.color-btn{
-  width:44px;height:44px;border-radius:50%;
-  border:1px solid var(--line-strong);background:#fff;color:var(--text-1);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  box-shadow:var(--shadow-soft);font-size:22px;font-weight:800;transition:all .2s ease;
+function normalizeAnswer(v){ return String(v ?? '').trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.'); }
+function decodeB64(b64){ try{return decodeURIComponent(escape(atob(b64 || '')));}catch(e){return '';}}
+function escapeHtml(str){ return String(str ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s])); }
+
+function getExamId(){
+  const title = document.title || 'Game';
+  return title.replace(/\.html?$/i,'').trim() || 'Game';
 }
-.draw-btn:hover,.color-btn:hover{transform:translateY(-1px);background:#f6fbff;border-color:#9fc1df}
-.draw-btn.active{background:linear-gradient(135deg,var(--primary) 0%, var(--accent) 100%);color:#fff;border-color:transparent}
-.color-btn{position:relative;font-size:0}
-.color-btn::after{content:"";width:28px;height:28px;border-radius:50%;display:block;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
-.color-btn.active{border:2px solid #111827;transform:translateY(-1px) scale(1.04)}
-.color-btn[data-color="red"]::after{background:#ff5a47}
-.color-btn[data-color="blue"]::after{background:#3b82f6}
-.color-btn[data-color="green"]::after{background:#16a34a}
-.slide-draw-canvas{
-  position:absolute;left:0;right:0;top:72px;bottom:0;width:100%;height:calc(100% - 72px);
-  z-index:12;background:transparent;display:block;pointer-events:none;touch-action:none;
+function getLocalRankingKey(){ return 'imath_ranking_' + getExamId(); }
+function safeJsonParse(raw, fallback){ try{ return JSON.parse(raw); }catch(e){ return fallback; } }
+function normalizeRankingRecords(records){
+  if(!Array.isArray(records)) return [];
+  return records.map((r, idx) => ({
+    student: String(r?.student || 'Chưa rõ').trim() || 'Chưa rõ',
+    totalScore: Number(r?.totalScore || 0),
+    submittedAt: String(r?.submittedAt || ''),
+    examId: String(r?.examId || getExamId()),
+    attemptId: String(r?.attemptId || `${Date.now()}_${idx}`),
+    details: Array.isArray(r?.details) ? r.details : []
+  }));
 }
-.slide-container.draw-mode-pen .slide-draw-canvas,
-.slide-container.draw-mode-eraser .slide-draw-canvas{pointer-events:auto}
-.slide-container.draw-mode-pen .slide-draw-canvas{cursor:crosshair}
-.slide-container.draw-mode-eraser .slide-draw-canvas{cursor:cell}
-.q-header,.actions-area{position:relative;z-index:20}
-.content-wrapper{position:relative;z-index:5}
-@media (max-width:768px){
-  .draw-toolbar{gap:8px}
-  .draw-btn,.color-btn{width:36px;height:36px;font-size:18px}
-  .color-btn::after{width:22px;height:22px}
-  .slide-draw-canvas{top:112px;height:calc(100% - 112px)}
+function compareRanking(a,b){
+  if((b.totalScore||0) !== (a.totalScore||0)) return (b.totalScore||0) - (a.totalScore||0);
+  const ta = Date.parse(a.submittedAt) || 0, tb = Date.parse(b.submittedAt) || 0;
+  return ta - tb;
+}
+function getStoredRankingLocal(){ return normalizeRankingRecords(safeJsonParse(localStorage.getItem(getLocalRankingKey()) || '[]', [])); }
+function setStoredRankingLocal(records){ localStorage.setItem(getLocalRankingKey(), JSON.stringify(normalizeRankingRecords(records))); }
+
+async function readScoreRecordsFromHandle(){
+  if(!scoreFileHandle) return null;
+  const file = await scoreFileHandle.getFile();
+  const txt = await file.text();
+  return normalizeRankingRecords(safeJsonParse(txt || '[]', []));
+}
+async function writeScoreRecordsToHandle(records){
+  if(!scoreFileHandle) return false;
+  const writable = await scoreFileHandle.createWritable();
+  await writable.write(JSON.stringify(normalizeRankingRecords(records), null, 2));
+  await writable.close();
+  return true;
+}
+async function ensureHandlePermission(mode='readwrite'){
+  if(!scoreFileHandle) return false;
+  if((await scoreFileHandle.queryPermission({mode})) === 'granted') return true;
+  return (await scoreFileHandle.requestPermission({mode})) === 'granted';
+}
+async function selectScoreFile(){
+  if(!window.showOpenFilePicker){
+    alert('Trình duyệt này không hỗ trợ chọn file kết quả. Hệ thống sẽ dùng bộ nhớ trình duyệt trên máy này.');
+    return false;
+  }
+  try{
+    const [handle] = await window.showOpenFilePicker({
+      multiple:false,
+      suggestedName:SCORE_FILE_NAME,
+      types:[{description:'JSON files', accept:{'application/json':['.json']}}]
+    });
+    scoreFileHandle = handle;
+    await ensureHandlePermission('readwrite');
+    const records = await readScoreRecordsFromHandle();
+    if(records === null){
+      await writeScoreRecordsToHandle([]);
+    }
+    updateRankingSourceNote();
+    return true;
+  }catch(err){
+    return false;
+  }
+}
+async function createScoreFile(){
+  if(!window.showSaveFilePicker){
+    alert('Trình duyệt này không hỗ trợ tạo file kết quả trực tiếp. Hệ thống sẽ dùng bộ nhớ trình duyệt trên máy này.');
+    return false;
+  }
+  try{
+    scoreFileHandle = await window.showSaveFilePicker({
+      suggestedName:SCORE_FILE_NAME,
+      types:[{description:'JSON files', accept:{'application/json':['.json']}}]
+    });
+    await ensureHandlePermission('readwrite');
+    await writeScoreRecordsToHandle([]);
+    updateRankingSourceNote();
+    alert('Đã tạo file kết quả. Thầy/cô nên lưu file này cùng thư mục chứa Game.html.');
+    return true;
+  }catch(err){
+    return false;
+  }
+}
+async function loadRankingRecords(){
+  if(scoreFileHandle && await ensureHandlePermission('readwrite')){
+    try{
+      const fileRecords = await readScoreRecordsFromHandle();
+      if(fileRecords) return fileRecords.filter(r => (r.examId || getExamId()) === getExamId());
+    }catch(err){}
+  }
+  return getStoredRankingLocal();
+}
+async function saveRankingRecord(record){
+  const localRecords = getStoredRankingLocal();
+  localRecords.push(record);
+  setStoredRankingLocal(localRecords);
+  if(scoreFileHandle && await ensureHandlePermission('readwrite')){
+    try{
+      const fileRecords = await readScoreRecordsFromHandle() || [];
+      fileRecords.push(record);
+      await writeScoreRecordsToHandle(fileRecords);
+    }catch(err){
+      console.warn('Không ghi được file kết quả:', err);
+    }
+  }
+}
+function updateRankingSourceNote(){
+  const el = document.getElementById('rankingSourceNote');
+  if(!el) return;
+  if(scoreFileHandle){
+    el.textContent = 'Nguồn dữ liệu: file ' + (scoreFileHandle.name || SCORE_FILE_NAME) + '.';
+  }else{
+    el.textContent = 'Nguồn dữ liệu: bộ nhớ trình duyệt trên máy này. Muốn lưu chung thư mục Game.html, hãy bấm “Tạo file kết quả mới” hoặc “Chọn file kết quả”.';
+  }
+}
+function formatDateTimeDisplay(v){
+  if(!v) return '';
+  const d = new Date(v);
+  if(isNaN(d.getTime())) return String(v);
+  return d.toLocaleString('vi-VN');
+}
+function buildRankingTable(records){
+  const body = document.getElementById('rankingTableBody');
+  const empty = document.getElementById('rankingEmpty');
+  if(!body || !empty) return;
+  const sorted = [...records].sort(compareRanking);
+  if(!sorted.length){
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  body.innerHTML = sorted.map((r, idx) => {
+    const rank = idx + 1;
+    const rankCls = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
+    return `<tr>
+      <td><span class="rank-badge ${rankCls}">${rank}</span></td>
+      <td>${escapeHtml(r.student || 'Chưa rõ')}</td>
+      <td><b>${formatScore(Number(r.totalScore || 0))}</b></td>
+      <td>${idx + 1}</td>
+      <td>${escapeHtml(formatDateTimeDisplay(r.submittedAt))}</td>
+    </tr>`;
+  }).join('');
+}
+async function openRankingBoard(){
+  updateRankingSourceNote();
+  const records = await loadRankingRecords();
+  buildRankingTable(records);
+  document.getElementById('rankingOverlay').classList.add('show');
+}
+function closeRankingOverlay(){ document.getElementById('rankingOverlay').classList.remove('show'); }
+
+function startExam(){
+  const inp = document.getElementById('studentNameInput');
+  const name = (inp.value || '').trim();
+  if(!name){ inp.focus(); inp.style.borderColor = '#ef4444'; return; }
+  localStorage.setItem('imath_student_name', name);
+  document.getElementById('studentBadge').textContent = '👤 Học sinh: ' + name;
+  document.body.classList.remove('before-start');
+  document.getElementById('startScreen').style.display = 'none';
+  examStarted = true;
+  setupBackgroundMusic();
+  playRandomBackgroundMusic();
+  renderSlide(0);
+  updateProgress();
 }
 
-</style>
-        
-        <script>
-        MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']], processEscapes: true }, chtml: { scale: 1, matchFontHeight: false } };
-        </script>
-        <script defer src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js'></script>
-        <style id="imath-options-stack-style">.options-stack{display:flex;flex-direction:column;gap:12px;width:100%;}.options-stack .btn-option{width:100%;display:flex;align-items:flex-start;}.options-stack .opt-text{flex:1;}</style></head><body>
-        
-            <button class="nav-arrow nav-prev" onclick="prevSlide()" title="Câu trước (Mũi tên trái)">❮</button>
-            <button class="nav-arrow nav-next" onclick="nextSlide()" title="Câu sau (Mũi tên phải hoặc Enter)">❯</button>
-        
-        <div class="slide-container" id="slide-0"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 1:</span> Một tiệm tranh có ${11}$ bức tranh gỗ và ${10}$ bức tranh sơn mài, các bức tranh là khác nhau. Chọn ngẫu nhiên ${9}$ bức tranh để mua. Xác suất để có đúng ${2}$ bức tranh gỗ được chọn là</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{3}{4199}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{11}{58786}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{5}{8398}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{660}{29393}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-0">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một tiệm tranh có ${11}$ bức tranh gỗ và ${10}$ bức tranh sơn mài, các bức tranh là khác nhau. Chọn ngẫu nhiên ${9}$ bức tranh để mua. Xác suất để có đúng ${2}$ bức tranh gỗ được chọn là<br><br>A. ${\frac{3}{4199}}$.	   B. ${\frac{11}{58786}}$.	     C. ${\frac{5}{8398}}$.	     D. ${\frac{660}{29393}}$.<br><br>Lời giải:<br> Chọn D<br>Số phần tử của không gian mẫu là: $C^{9}_{21}=293930$.<br><br>Số cách chọn ${9}$ bức tranh để mua trong đó có đúng ${2}$ bức tranh gỗ là: $C^{2}_{11}.C^{7}_{10}=6600$.<br><br>Xác suất để có đúng ${2}$ bức tranh gỗ được chọn là: $P=\dfrac{6600}{293930}=\frac{660}{29393}$</div></div></div></div><div class="slide-container" id="slide-1"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 2:</span> Một nhà sách có ${15}$ cuốn sách tham khảo môn Văn 10 và ${14}$ cuốn sách tham khảo môn Sinh Học 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${5}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 được chọn là</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{22022}{435}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{2}{585}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{13189}{13195}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{250}{261}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-1">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một nhà sách có ${15}$ cuốn sách tham khảo môn Văn 10 và ${14}$ cuốn sách tham khảo môn Sinh Học 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${5}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 được chọn là<br><br>A. ${\frac{22022}{435}}$.	   B. ${\frac{2}{585}}$.	     C. ${\frac{13189}{13195}}$.	     D. ${\frac{250}{261}}$.<br><br>Lời giải:<br> Chọn D<br>Số phần tử của không gian mẫu là: $C^{5}_{29}=118755$.<br><br>Số cách chọn có cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 là: $C^{5}_{29}-C^{5}_{15}-C^{5}_{14}=\frac{250}{261}$.<br><br>Xác suất để cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 được chọn là: $P=\dfrac{113750}{118755}=\frac{250}{261}$</div></div></div></div><div class="slide-container" id="slide-2"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 3:</span> Một hộp chứa 32 thẻ được đánh số từ 1 đến 32. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;29]}$”. Xác suất của biến cố ${A}$ là</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{15}{16}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{9}{8}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{29}{32}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${1}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-2">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một hộp chứa 32 thẻ được đánh số từ 1 đến 32. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;29]}$”. Xác suất của biến cố ${A}$ là<br><br>A. ${\frac{15}{16}}$.	   B. ${\frac{9}{8}}$.	     C. ${\frac{29}{32}}$.	     D. ${1}$.<br><br>Lời giải:<br> Chọn C <br> Số phần tử của không gian mẫu là: $n(\Omega)=32$.<br><br>$n(A)=29-1+1=29$.<br><br> Xác suất của biến cố ${A}$ là $P=\dfrac{29}{32}=\frac{29}{32}$.</div></div></div></div><div class="slide-container" id="slide-3"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 4:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 8”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{2}{3}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{19}{36}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{7}{12}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{23}{36}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-3">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 8”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{2}{3}}$.	   B. ${\frac{19}{36}}$.	     C. ${\frac{7}{12}}$.	     D. ${\frac{23}{36}}$.<br><br>Lời giải:<br> Chọn C <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(1;1), (1;2), (1;3), (1;4), (1;5), (1;6), (2;1), (2;2), (2;3), (2;4), (2;5), (3;1), (3;2), (3;3), (3;4), (4;1), (4;2), (4;3), (5;1), (5;2), (6;1)\}$. <br><br> Vậy số phần tử của biến cố ${A}$ là ${21}$.<br><br> Xác suất của biến cố ${A}$ là: $P=\dfrac{21}{36}=\frac{7}{12}$.</div></div></div></div><div class="slide-container" id="slide-4"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 5:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{23}{36}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{2}{9}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{5}{18}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{13}{36}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-4">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{23}{36}}$.	   B. ${\frac{2}{9}}$.	     C. ${\frac{5}{18}}$.	     D. ${\frac{13}{36}}$.<br><br>Lời giải:<br> Chọn C <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(3;6), (4;5), (4;6), (5;4), (5;5), (5;6), (6;3), (6;4), (6;5), (6;6)\}$. <br><br> Vậy số phần tử của biến cố ${A}$ là ${10}$.<br><br> Xác suất của biến cố ${A}$ là: $P=\dfrac{10}{36}=\frac{5}{18}$.</div></div></div></div><div class="slide-container" id="slide-5"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 6:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 6”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{1}{12}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{5}{36}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{1}{4}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{2}{9}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-5">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 6”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{1}{12}}$.	   B. ${\frac{5}{36}}$.	     C. ${\frac{1}{4}}$.	     D. ${\frac{2}{9}}$.<br><br>Lời giải:<br> Chọn B <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(1;5), (2;4), (3;3), (4;2), (5;1)\}$. <br><br> Vậy số phần tử của biến cố ${A}$ là ${5}$.<br><br> Xác suất của biến cố ${A}$ là: $P=\dfrac{5}{36}=\frac{5}{36}$.</div></div></div></div><div class="slide-container" id="slide-6"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 7:</span> Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 9”. Xác suất của biến cố ${A}$ bằng</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{4}{9}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{13}{18}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{5}{18}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{5}{36}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-6">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 9”. Xác suất của biến cố ${A}$ bằng<br><br>A. ${\frac{4}{9}}$.	   B. ${\frac{13}{18}}$.	     C. ${\frac{5}{18}}$.	     D. ${\frac{5}{36}}$.<br><br>Lời giải:<br> Chọn D <br> Số phần tử của không gian mẫu: $n(\Omega)=36$.<br><br>${A}=\{(2;6), (3;5), (4;4), (5;3), (6;2)\}$. <br><br> Số phần tử của biến cố ${A}$ là ${5}$. Xác suất của biến cố ${A}$ là: $P=\dfrac{5}{36}=\frac{5}{36}$.</div></div></div></div><div class="slide-container" id="slide-7"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 8:</span> Một hộp chứa 40 quả cầu cùng kích thước được đánh số từ 1 đến 40. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.</div><div class="options-stack"><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{1}{2}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{11}{20}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{21}{40}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{13}{20}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-7">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một hộp chứa 40 quả cầu cùng kích thước được đánh số từ 1 đến 40. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.<br><br>A. ${\frac{1}{2}}$.	   B. ${\frac{11}{20}}$.	     C. ${\frac{21}{40}}$.	     D. ${\frac{13}{20}}$.<br><br>Lời giải:<br> Chọn A <br> Số phần tử của không gian mẫu là: $n(\Omega)=40$.<br><br>Gọi ${A}$ là biến cố số ghi trên quả cầu được là một số chẵn.<br><br>${A}=\{2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40\}\Rightarrow n(A)=20$.<br><br>Xác suất của biến cố ${A}$ là: $P=\dfrac{20}{40}=\frac{1}{2}$.</div></div></div></div><div class="slide-container" id="slide-8"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 9:</span> Một hộp chứa 21 quả cầu cùng kích thước được đánh số từ 1 đến 21. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 12” bằng</div><div class="options-stack"><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{1}{21}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{4}{21}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{2}{7}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{2}{21}}$.</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-8">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một hộp chứa 21 quả cầu cùng kích thước được đánh số từ 1 đến 21. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 12” bằng<br><br>A. ${\frac{1}{21}}$.	   B. ${\frac{4}{21}}$.	     C. ${\frac{2}{7}}$.	     D. ${\frac{2}{21}}$.<br><br>Lời giải:<br> Chọn A <br> Số phần tử của không gian mẫu là: $n(\Omega)=21$.<br><br>Gọi ${A}$ là biến cố số ghi trên quả cầu được chọn vừa là một số chẵn và chia hết cho 12.<br><br>${A}=\{12\}\Rightarrow n(A)=1$.<br><br>Xác suất của biến cố ${A}$ là: $P=\dfrac{1}{21}=\frac{1}{21}$.</div></div></div></div><div class="slide-container" id="slide-9"><div class="q-header"><div class="header-left"><div class="part-badge">PHẦN I (Trắc nghiệm)</div></div><div class="header-right"><button class="zoom-btn" onclick="changeFontSize(-2)" title="Giảm cỡ chữ">A-</button><button class="zoom-btn" onclick="changeFontSize(2)" title="Tăng cỡ chữ">A+</button><button class="timer-edit-btn" type="button" onclick="openTimerModal(this)" title="Thiết lập thời gian">🕘</button><div class="timer" onclick="startTimer(this)" ondblclick="editTimer(this)" data-time="60" title="Click: Chạy/Dừng. Click đúp: Thiết lập thời gian.">⏳ Bắt đầu (01:00)</div><button class="btn-exit-html" onclick="document.title='EXIT_FULL_SCREEN'" title="Thoát chế độ trình chiếu (Phím Esc)">❌ Thoát</button></div></div><div class="content-wrapper"><div class="question-content"><span class="q-label">Câu 10:</span> Một đội có ${6}$ bạn nam và ${8}$ bạn nữ, giáo viên chọn ngẫu nhiên ${4}$ bạn tham gia thi đấu thể thao của trường. Xác suất chọn được ${4}$ bạn nữ là:</div><div class="options-stack"><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">A</div> <div class="opt-text">${\frac{14}{201}}$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">B</div> <div class="opt-text">${\frac{70}{997}}$.</div></div><div class="btn-option" data-correct="true" onclick="checkChoice(this, true)"><div class="opt-badge">C</div> <div class="opt-text">${\frac{10}{143} }$.</div></div><div class="btn-option" data-correct="false" onclick="checkChoice(this, false)"><div class="opt-badge">D</div> <div class="opt-text">${\frac{35}{498}}$ .</div></div></div><div class="actions-area"><button class="btn-action btn-reveal" onclick="revealAnswerMC(this)">👁 HIỆN ĐÁP ÁN</button><div class="slide-counter" id="counter-9">Câu ? / ?</div><button class="btn-action btn-explain" onclick="toggleExpl(this)">💡 XEM LỜI GIẢI</button></div><div class="explanation-box"><div class="explanation-title">📝 LỜI GIẢI CHI TIẾT:</div><div class="explanation-content">Một đội có ${6}$ bạn nam và ${8}$ bạn nữ, giáo viên chọn ngẫu nhiên ${4}$ bạn tham gia thi đấu thể thao của trường. Xác suất chọn được ${4}$ bạn nữ là:<br><br>A.  ${\frac{14}{201}}$.	   B.  ${\frac{70}{997}}$.	     C. ${\frac{10}{143} }$.	     D. ${\frac{35}{498}}$ .<br><br>Lời giải:<br> Chọn C<br> ${n(\Omega)= C^{4}_{14} =1001}$ <br><br> ${n(A)=C^{4}_{8}=70 }$ <br><br> ${P(A) = \dfrac{10}{143}}$</div></div></div></div>
-        
-            <script>
-                let currentSlide = 0; let slides = []; let timerInterval;
-                
-                let audioCtx = null;
-                function getAudioCtx(){
-                    if(!audioCtx){
-                        const Ctx = window.AudioContext || window.webkitAudioContext;
-                        if(Ctx) audioCtx = new Ctx();
-                    }
-                    return audioCtx;
-                }
+function renderSlide(i){
+  const all = document.querySelectorAll('.slide-container');
+  if(!all.length) return;
+  currentSlide = Math.max(0, Math.min(i, all.length - 1));
+  all.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
+  all.forEach((s, idx) => { const c = s.querySelector('.slide-counter'); if(c) c.textContent = `Câu ${idx + 1} / ${all.length}`; });
+  updateProgress();
+  if(window.MathJax?.typesetPromise) MathJax.typesetPromise([all[currentSlide]]).catch(()=>{});
+}
+function nextSlide(){ if(!examStarted) return; renderSlide(currentSlide + 1); }
+function prevSlide(){ if(!examStarted) return; renderSlide(currentSlide - 1); }
+function changeFontSize(delta){
+  const root = document.documentElement; const styles = getComputedStyle(root);
+  const base = parseFloat(styles.getPropertyValue('--base-size')) || 32;
+  const opt = parseFloat(styles.getPropertyValue('--opt-size')) || 28;
+  root.style.setProperty('--base-size', Math.max(16, base + delta) + 'px');
+  root.style.setProperty('--opt-size', Math.max(14, opt + delta) + 'px');
+}
+function startTimer(el){
+  if(timerInterval){ clearInterval(timerInterval); timerInterval = null; el.classList.remove('running'); return; }
+  let timeLeft = parseInt(el.getAttribute('data-time') || '60', 10);
+  el.classList.add('running');
+  timerInterval = setInterval(()=>{
+    timeLeft -= 1;
+    if(timeLeft < 0){ clearInterval(timerInterval); timerInterval = null; el.classList.remove('running'); el.textContent = '⏰ Hết giờ'; playSound('timeup'); return; }
+    const mm = String(Math.floor(timeLeft / 60)).padStart(2,'0');
+    const ss = String(timeLeft % 60).padStart(2,'0');
+    el.textContent = `⏳ ${mm}:${ss}`;
+    el.setAttribute('data-time', String(timeLeft));
+  }, 1000);
+}
+function editTimer(el){
+  const raw = prompt('Nhập số phút cho bộ đếm giờ:', '1');
+  if(raw === null) return;
+  const minutes = Math.max(1, parseInt(raw, 10) || 1); const seconds = minutes * 60;
+  el.setAttribute('data-time', String(seconds));
+  el.textContent = `⏳ Bắt đầu (${String(minutes).padStart(2,'0')}:00)`;
+  if(timerInterval){ clearInterval(timerInterval); timerInterval = null; el.classList.remove('running'); }
+}
+function showFeedback(ok, slide){
+  let pop = slide.querySelector('.feedback-popup');
+  if(!pop){ pop = document.createElement('div'); pop.className = 'feedback-popup'; pop.innerHTML = '<div class="emoji"></div><div class="message"></div>'; slide.appendChild(pop); }
+  pop.className = 'feedback-popup ' + (ok ? 'correct' : 'wrong');
+  pop.querySelector('.emoji').textContent = ok ? '🎉' : '❌';
+  pop.querySelector('.message').textContent = ok ? 'Đã lưu lựa chọn' : 'Đã lưu lựa chọn';
+  requestAnimationFrame(()=>pop.classList.add('pop')); setTimeout(()=>pop.classList.remove('pop'), 650);
+}
+function checkChoice(btn, isCorrect){
+  const slide = btn.closest('.slide-container'); if(!slide || examSubmitted) return;
+  slide.querySelectorAll('.btn-option').forEach(b => b.classList.remove('selected-answer'));
+  btn.classList.add('selected-answer');
+  slide.dataset.answered = 'true';
+  showFeedback(true, slide);
+  updateProgress();
+}
+function revealAnswerMC(btn){
+  const slide = btn.closest('.slide-container');
+  const corr = slide.querySelector('.btn-option[data-correct="true"]');
+  if(corr) corr.classList.add('correct');
+  const selected = slide.querySelector('.btn-option.selected-answer');
+  if(selected && selected !== corr) selected.classList.add('wrong');
+}
+function checkTF(btn, userChoice){
+  const row = btn.closest('.tf-row'); const slide = btn.closest('.slide-container'); if(!row || examSubmitted) return;
+  row.querySelectorAll('.btn-tf').forEach(b => b.classList.remove('selected-answer','user-correct','user-wrong'));
+  btn.classList.add('selected-answer');
+  row.dataset.userChoice = String(userChoice);
+  const allRows = slide.querySelectorAll('.tf-row');
+  const done = Array.from(allRows).every(r => ['true','false'].includes(r.dataset.userChoice));
+  if(done) slide.dataset.answered = 'true';
+  showFeedback(true, slide); updateProgress();
+}
+function revealAnswerTF(btn){
+  const slide = btn.closest('.slide-container');
+  slide.querySelectorAll('.tf-row').forEach(row => {
+    const isTrue = row.getAttribute('data-correct') === 'true';
+    row.querySelectorAll('.btn-tf').forEach(b => {
+      if(b.innerText==='Đ' && isTrue) b.classList.add('reveal-true');
+      if(b.innerText==='S' && !isTrue) b.classList.add('reveal-false');
+    });
+    const selected = row.querySelector('.btn-tf.selected-answer');
+    if(selected){
+      const chosen = selected.innerText.trim() === 'Đ';
+      selected.classList.add(chosen === isTrue ? 'user-correct' : 'user-wrong');
+    }
+  });
+}
+function checkShort(btn, b64){
+  const slide = btn.closest('.slide-container'); const inp = slide.querySelector('input'); if(!inp || examSubmitted) return;
+  slide.dataset.answered = normalizeAnswer(inp.value) ? 'true' : 'false';
+  showFeedback(true, slide); updateProgress();
+}
+function revealShort(btn, b64){
+  const slide = btn.closest('.slide-container'); const input = slide.querySelector('input');
+  if(input) input.value = decodeB64(b64);
+}
+function toggleExpl(btn){ const box = btn.closest('.slide-container').querySelector('.explanation-box'); box.style.display = box.style.display==='block' ? 'none' : 'block'; }
+function handleEnter(e, id, b64){ if (e.key === 'Enter') checkShort(document.getElementById('btn-chk-'+id), b64); }
+function initSlides(data){ slides = Array.isArray(data) ? data : []; renderSlide(0); updateProgress(); }
+function initImageZoom(){ document.querySelectorAll('.real-image').forEach(img => img.addEventListener('wheel', function(e){ e.preventDefault(); let h = img.clientHeight; let delta = e.deltaY < 0 ? 40 : -40; let nh = h + delta; if(nh >= 150 && nh <= 1200){ img.style.maxHeight='none'; img.style.height = nh + 'px'; img.style.width='auto'; } })); }
+function updateProgress(){
+  const total = slides.length; let answered = 0;
+  document.querySelectorAll('.slide-container').forEach((slide, idx) => {
+    const type = slides[idx]?.type;
+    let ok = false;
+    if(type === 'mc') ok = !!slide.querySelector('.btn-option.selected-answer');
+    else if(type === 'tf') ok = Array.from(slide.querySelectorAll('.tf-row')).every(r => ['true','false'].includes(r.dataset.userChoice));
+    else if(type === 'short') ok = !!normalizeAnswer(slide.querySelector('input')?.value || '');
+    if(ok) answered += 1;
+  });
+  const el = document.getElementById('progressBadge'); if(el) el.textContent = `📝 Tiến độ: ${answered}/${total} câu`;
+}
+function getMcUserAnswer(slide){ const sel = slide.querySelector('.btn-option.selected-answer'); return sel ? (sel.querySelector('.opt-badge')?.textContent || '').trim() : 'Chưa trả lời'; }
+function getMcCorrectAnswer(slide){ const corr = slide.querySelector('.btn-option[data-correct="true"]'); return corr ? (corr.querySelector('.opt-badge')?.textContent || '').trim() : ''; }
+function getTfUserAnswer(slide){ return Array.from(slide.querySelectorAll('.tf-row')).map((row, i) => `${String.fromCharCode(97+i)}) ${row.dataset.userChoice === 'true' ? 'Đ' : row.dataset.userChoice === 'false' ? 'S' : '?'}`).join(' | '); }
+function getTfCorrectAnswer(slide){ return Array.from(slide.querySelectorAll('.tf-row')).map((row, i) => `${String.fromCharCode(97+i)}) ${row.dataset.correct === 'true' ? 'Đ' : 'S'}`).join(' | '); }
+function scoreTf(slide){ let score = 0; slide.querySelectorAll('.tf-row').forEach(row => { const chosen = row.dataset.userChoice; const correct = row.dataset.correct; const selected = row.querySelector('.btn-tf.selected-answer'); if(selected){ const ok = chosen === correct; selected.classList.add(ok ? 'user-correct' : 'user-wrong'); if(ok) score += 0.25; } }); return score; }
+function formatScore(num){ return (Math.round(num * 100) / 100).toFixed(2).replace(/\.00$/, '').replace('.', ','); }
+function submitExam(){
+  if(!examStarted || examSubmitted) return;
+  const total = slides.length;
+  const answered = document.getElementById('progressBadge')?.textContent || '';
+  const sure = confirm(`Bạn có chắc muốn nộp bài không?\n${answered}`);
+  if(!sure) return;
+  examSubmitted = true; document.body.classList.remove('before-submit'); document.body.classList.add('after-submit');
+  let totalScore = 0, details = [];
+  document.querySelectorAll('.slide-container').forEach((slide, idx) => {
+    const meta = slides[idx] || {}; let score = 0, userAns = 'Chưa trả lời', correctAns = '', result = false, typeLabel = '';
+    if(meta.type === 'mc'){
+      typeLabel = 'Trắc nghiệm'; userAns = getMcUserAnswer(slide); correctAns = getMcCorrectAnswer(slide);
+      const sel = slide.querySelector('.btn-option.selected-answer'); const corr = slide.querySelector('.btn-option[data-correct="true"]');
+      if(corr) corr.classList.add('correct'); if(sel && sel !== corr) sel.classList.add('wrong');
+      result = !!sel && !!corr && sel === corr; score = result ? 1 : 0;
+    }else if(meta.type === 'tf'){
+      typeLabel = 'Đúng-Sai'; userAns = getTfUserAnswer(slide); correctAns = getTfCorrectAnswer(slide);
+      score = scoreTf(slide); result = Math.abs(score - 1) < 1e-9;
+    }else{
+      typeLabel = 'Trả lời ngắn';
+      const input = slide.querySelector('input'); const user = normalizeAnswer(input?.value || ''); const corr = normalizeAnswer(meta.correct_answer || '');
+      userAns = (input?.value || '').trim() || 'Chưa trả lời'; correctAns = meta.correct_answer || '';
+      result = !!corr && user === corr; score = result ? 1 : 0;
+      if(input){ input.style.borderColor = result ? '#22c55e' : '#ef4444'; if(!result && meta.correct_answer) input.value = input.value || ''; }
+    }
+    totalScore += score;
+    details.push({ stt: idx + 1, typeLabel, userAns, correctAns, result, score });
+  });
+  buildResult(details, totalScore);
+  const resultRecord = {
+    student: localStorage.getItem('imath_student_name') || '',
+    totalScore,
+    submittedAt: new Date().toISOString(),
+    examId: getExamId(),
+    attemptId: 'attempt_' + Date.now() + '_' + Math.random().toString(36).slice(2,8),
+    details
+  };
+  localStorage.setItem('imath_last_result', JSON.stringify(resultRecord));
+  saveRankingRecord(resultRecord);
+  document.getElementById('floatingSubmitBtn').style.display = 'none';
+}
+function buildResult(details, totalScore){
+  const name = localStorage.getItem('imath_student_name') || 'Chưa rõ';
+  document.getElementById('resultStudentLine').textContent = `Học sinh: ${name}`;
+  const mcCount = slides.filter(x => x.type === 'mc').length;
+  const tfCount = slides.filter(x => x.type === 'tf').length;
+  const saCount = slides.filter(x => x.type === 'short').length;
+  document.getElementById('resultSummary').innerHTML = `
+    <div class="summary-box"><div class="k">Học sinh</div><div class="v" style="font-size:20px">${escapeHtml(name)}</div></div>
+    <div class="summary-box"><div class="k">Tổng điểm</div><div class="v">${formatScore(totalScore)}</div></div>
+    <div class="summary-box"><div class="k">Số câu TN</div><div class="v">${mcCount}</div></div>
+    <div class="summary-box"><div class="k">Số câu Đ-S</div><div class="v">${tfCount}</div></div>
+    <div class="summary-box"><div class="k">Số câu TLN</div><div class="v">${saCount}</div></div>
+    <div class="summary-box"><div class="k">Thời điểm nộp</div><div class="v" style="font-size:20px">${escapeHtml(new Date().toLocaleString('vi-VN'))}</div></div>`;
+  document.getElementById('resultTableBody').innerHTML = details.map(d => `
+    <tr>
+      <td>${d.stt}</td>
+      <td>${escapeHtml(d.typeLabel)}</td>
+      <td>${escapeHtml(d.userAns)}</td>
+      <td>${escapeHtml(d.correctAns)}</td>
+      <td>${d.result ? '<span class="badge-ok">Đúng</span>' : '<span class="badge-no">Sai</span>'}</td>
+      <td>${formatScore(d.score)}</td>
+    </tr>`).join('');
+  document.getElementById('resultOverlay').classList.add('show');
+}
+function closeResultOverlay(){ document.getElementById('resultOverlay').classList.remove('show'); }
+function returnToHome(){
+  closeResultOverlay();
+  closeRankingOverlay();
+  examStarted = false;
+  examSubmitted = false;
+  currentSlide = 0;
+  stopBackgroundMusic();
+  document.body.classList.add('before-start','before-submit');
+  document.body.classList.remove('after-submit');
+  const startScreen = document.getElementById('startScreen');
+  if(startScreen) startScreen.style.display = 'flex';
+  const submitBtn = document.getElementById('floatingSubmitBtn');
+  if(submitBtn) submitBtn.style.display = '';
+  document.querySelectorAll('.slide-container').forEach((slide, idx) => {
+    slide.classList.remove('active');
+    slide.dataset.answered = 'false';
+    slide.querySelectorAll('.btn-option').forEach(b => b.classList.remove('selected-answer','correct','wrong','disabled'));
+    slide.querySelectorAll('.tf-row').forEach(row => {
+      delete row.dataset.userChoice;
+      row.querySelectorAll('.btn-tf').forEach(b => b.classList.remove('selected-answer','user-correct','user-wrong','reveal-true','reveal-false'));
+    });
+    slide.querySelectorAll('input.answer-input, .short-answer-area input').forEach(inp => {
+      inp.value = '';
+      inp.style.borderColor = '#cdddeb';
+    });
+    slide.querySelectorAll('.explanation-box').forEach(box => box.style.display = 'none');
+  });
+  const timers = document.querySelectorAll('.timer');
+  if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+  timers.forEach(el => {
+    el.classList.remove('running');
+    el.setAttribute('data-time','60');
+    el.textContent = '⏳ Bắt đầu (01:00)';
+  });
+  updateProgress();
+  const savedName = localStorage.getItem('imath_student_name') || '';
+  const input = document.getElementById('studentNameInput');
+  if(input){ input.value = ''; input.focus(); }
+  const badge = document.getElementById('studentBadge');
+  if(badge) badge.textContent = '👤 Học sinh: Chưa nhập';
+}
 
-                function playSound(type) {
-                    const ctx = getAudioCtx();
-                    if (!ctx) return;
-                    if (ctx.state === 'suspended') ctx.resume();
-                    const oscillator = ctx.createOscillator();
-                    const gainNode = ctx.createGain();
-                    oscillator.connect(gainNode);
-                    gainNode.connect(ctx.destination);
-                    const now = ctx.currentTime;
-                    
-                    if (type === 'correct') { 
-                        if(navigator.vibrate) navigator.vibrate([100, 50, 100]); // Rung 2 nhịp vui vẻ
-                        oscillator.type = 'sine';
-                        oscillator.frequency.setValueAtTime(800, now);
-                        oscillator.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
-                        gainNode.gain.setValueAtTime(1.5, now);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                        oscillator.start(now); oscillator.stop(now + 0.3);
-                    } else if (type === 'wrong') { 
-                        if(navigator.vibrate) navigator.vibrate(200); // Rung 1 nhịp dài cảnh báo
-                        oscillator.type = 'sawtooth';
-                        oscillator.frequency.setValueAtTime(150, now);
-                        oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.2);
-                        gainNode.gain.setValueAtTime(1.2, now);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-                        oscillator.start(now); oscillator.stop(now + 0.3);
-                    } else if (type === 'timeup') { 
-                        oscillator.type = 'square';
-                        oscillator.frequency.setValueAtTime(400, now);
-                        gainNode.gain.setValueAtTime(1.5, now);
-                        gainNode.gain.setValueAtTime(1.5, now + 0.1);
-                        gainNode.gain.setValueAtTime(0, now + 0.15);
-                        gainNode.gain.setValueAtTime(1.5, now + 0.2);
-                        gainNode.gain.setValueAtTime(1.5, now + 0.3);
-                        gainNode.gain.setValueAtTime(0, now + 0.35);
-                        gainNode.gain.setValueAtTime(1.5, now + 0.4);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 1.0);
-                        oscillator.start(now); oscillator.stop(now + 1.0);
-                    } else if (type === 'tick') { 
-                        oscillator.type = 'triangle';
-                        oscillator.frequency.setValueAtTime(1000, now);
-                        gainNode.gain.setValueAtTime(0.8, now);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                        oscillator.start(now); oscillator.stop(now + 0.1);
-                    }
-                }
-                
-                const msgCorrect = ["Tuyệt vời!", "Chính xác!", "Quá đỉnh!", "Xuất sắc!", "Giỏi quá!", "10 Điểm!"];
-                const msgWrong = ["Cố lên nhé!", "Chưa chính xác!", "Hãy thử lại!", "Cẩn thận hơn!", "Đừng nản chí!", "Suýt nữa thì đúng!"];
-
-                function showFeedback(isCorrect, slideElement) {
-                    let popup = document.createElement('div');
-                    popup.className = 'feedback-popup ' + (isCorrect ? 'correct' : 'wrong');
-                    let emoji = isCorrect ? '😄' : '😢';
-                    let textArr = isCorrect ? msgCorrect : msgWrong;
-                    let randomText = textArr[Math.floor(Math.random() * textArr.length)];
-                    popup.innerHTML = '<div class="emoji">' + emoji + '</div><div class="message">' + randomText + '</div>';
-                    slideElement.appendChild(popup);
-                    setTimeout(() => popup.classList.add('pop'), 10);
-                    setTimeout(() => { popup.classList.remove('pop'); setTimeout(() => popup.remove(), 400); }, 1500);
-                }
-
-                function changeFontSize(delta) {
-                    const root = document.documentElement; const style = getComputedStyle(root);
-                    let baseSize = parseInt(style.getPropertyValue('--base-size'));
-                    let optSize = parseInt(style.getPropertyValue('--opt-size'));
-                    let badgeSize = parseInt(style.getPropertyValue('--badge-size'));
-                    if ((delta < 0 && baseSize <= 24) || (delta > 0 && baseSize >= 60)) return;
-                    root.style.setProperty('--base-size', (baseSize + delta) + 'px');
-                    root.style.setProperty('--opt-size', (optSize + delta) + 'px');
-                    root.style.setProperty('--badge-size', (badgeSize + (delta > 0 ? 2 : -2)) + 'px');
-                }
-                function formatTime(seconds) {
-                    let m = Math.floor(seconds / 60); let s = seconds % 60;
-                    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-                }
-                function parseTime(input) {
-                    if (!input) return null; input = input.toString().trim();
-                    if (input.includes(":")) {
-                        let parts = input.split(":"); return (parseInt(parts[0]) || 0) * 60 + (parseInt(parts[1]) || 0);
-                    }
-                    return parseInt(input);
-                }
-                window.addEventListener("load", function(){ 
-                    document.addEventListener('keydown', function(e) {
-                        const tag = document.activeElement.tagName;
-                        if(tag === "INPUT" || tag === "TEXTAREA") return;
-                        if(e.key === "ArrowRight") nextSlide(); if(e.key === "ArrowLeft") prevSlide();
-                    });
-                });
-                function renderSlide(index) {
-                    document.querySelectorAll('.slide-container').forEach(el => el.classList.remove('active'));
-                    const activeSlide = document.getElementById('slide-' + index);
-                    if (activeSlide) {
-                        activeSlide.classList.add('active'); currentSlide = index;
-                        document.querySelectorAll('.slide-counter').forEach(el => el.innerText = `Câu ${index + 1} / ${slides.length}`);
-                        
-                        if (window.MathJax && !activeSlide.dataset.typeset) {
-                            MathJax.typesetPromise([activeSlide]).then(() => { activeSlide.dataset.typeset = "true"; }).catch((err) => console.log('MJ Error:', err));
-                        }
-                        clearInterval(timerInterval); const timerEl = activeSlide.querySelector('.timer');
-                        if(timerEl) { let def = 60; timerEl.dataset.time = def; timerEl.innerText = '⏳ Bắt đầu (' + formatTime(def) + ')'; timerEl.classList.remove('running'); }
-                        resizeSlideCanvas(activeSlide);
-                        redrawSlideDrawing(activeSlide);
-                    }
-                }
-                function startTimer(el) {
-                    if (el.classList.contains('running')) { clearInterval(timerInterval); el.classList.remove('running'); el.innerText = "⏳ Bắt đầu (" + formatTime(parseInt(el.dataset.time)) + ")"; return; }
-                    let timeLeft = parseInt(el.dataset.time); el.classList.add('running'); el.innerText = formatTime(timeLeft);
-                    clearInterval(timerInterval);
-                    timerInterval = setInterval(() => { 
-                        timeLeft--; el.innerText = formatTime(timeLeft); 
-                        if (timeLeft <= 5 && timeLeft > 0) { playSound('tick'); } 
-                        else if (timeLeft <= 0) { clearInterval(timerInterval); el.classList.remove('running'); el.innerText = "Hết giờ!"; playSound('timeup'); } 
-                    }, 1000);
-                }
-                function editTimer(el) {
-                    if (el.classList.contains('running')) { clearInterval(timerInterval); el.classList.remove('running'); }
-                    let newTime = parseTime(prompt("Nhập thời gian (Ví dụ: 5:00 hoặc 300 giây):", formatTime(parseInt(el.dataset.time))));
-                    if (newTime != null && !isNaN(newTime) && newTime > 0) { el.dataset.time = newTime; el.innerText = "⏳ Bắt đầu (" + formatTime(newTime) + ")"; }
-                }
-                function nextSlide() { if (currentSlide < slides.length - 1) renderSlide(currentSlide + 1); }
-                function prevSlide() { if (currentSlide > 0) renderSlide(currentSlide - 1); }
-                function openImage(src) { const w = window.open(""); w.document.write('<img src="' + src + '" style="max-width:100%;">'); }
-                
-                function checkChoice(btn, isCorrect) {
-                    if (btn.classList.contains('checked')) return; const slide = btn.closest('.slide-container');
-                    if (isCorrect) { 
-                        playSound('correct'); showFeedback(true, slide);
-                        btn.classList.add('correct', 'checked'); slide.querySelectorAll('.btn-option').forEach(b => b.classList.add('disabled')); slide.querySelector('.btn-reveal').style.display='none'; 
-                    } else { 
-                        playSound('wrong'); showFeedback(false, slide); btn.classList.add('wrong', 'checked'); 
-                    }
-                }
-                function revealAnswerMC(btn) {
-                    const slide = btn.closest('.slide-container'); const corr = slide.querySelector('.btn-option[data-correct="true"]');
-                    if(corr) corr.classList.add('correct', 'checked'); slide.querySelectorAll('.btn-option').forEach(b => b.classList.add('disabled')); btn.style.display='none';
-                }
-                
-                function checkTF(btn, userChoice) {
-                    const row = btn.closest('.tf-row'); row.querySelectorAll('.btn-tf').forEach(b => b.classList.remove('user-correct', 'user-wrong'));
-                    const slideContainer = btn.closest('.slide-container');
-                    if (userChoice === (row.getAttribute('data-correct') === 'true')) { 
-                        playSound('correct'); showFeedback(true, slideContainer); btn.classList.add('user-correct'); 
-                    } else { 
-                        playSound('wrong'); showFeedback(false, slideContainer); btn.classList.add('user-wrong'); 
-                    }
-                }
-                function revealAnswerTF(btn) {
-                    const slide = btn.closest('.slide-container');
-                    slide.querySelectorAll('.tf-row').forEach(row => {
-                        const isTrue = row.getAttribute('data-correct') === 'true';
-                        row.querySelectorAll('.btn-tf').forEach(b => {
-                            if(b.innerText==='Đ' && isTrue) b.classList.add('reveal-true');
-                            if(b.innerText==='S' && !isTrue) b.classList.add('reveal-false');
-                        });
-                    }); btn.style.display='none';
-                }
-                
-                function checkShort(btn, b64) {
-                    const slide = btn.closest('.slide-container'); const inp = slide.querySelector('input');
-                    let val = inp.value.trim().toLowerCase().replace(',', '.').replace(/\s+/g, '');
-                    let ans = decodeURIComponent(escape(atob(b64))).trim().toLowerCase().replace(',', '.');
-                    if (ans === "") { inp.style.borderColor='#f59e0b'; alert('Câu này không tìm thấy đáp án chuẩn.'); return; }
-                    if(val === ans) { 
-                        playSound('correct'); showFeedback(true, slide); inp.style.borderColor='#22c55e'; inp.style.color='#15803d'; 
-                    } else { 
-                        playSound('wrong'); showFeedback(false, slide); inp.style.borderColor='#ef4444'; 
-                    }
-                }
-                function revealShort(btn, b64) {
-                    const slide = btn.closest('.slide-container'); const input = slide.querySelector('input');
-                    let decoded = decodeURIComponent(escape(atob(b64)));
-                    input.value = decoded; btn.style.display='none';
-                }
-                function toggleExpl(btn) { const box = btn.closest('.slide-container').querySelector('.explanation-box'); box.style.display = box.style.display==='block' ? 'none' : 'block'; }
-                function handleEnter(e, id, b64) { if (e.key === "Enter") checkShort(document.getElementById('btn-chk-'+id), b64); }
-                function initSlides(data) { slides = data; initPresentationDrawTools(); renderSlide(0); }
-                function initImageZoom() {
-                    const images = document.querySelectorAll('.real-image');
-                    images.forEach(img => {
-                        img.addEventListener('wheel', function(e) {
-                            e.preventDefault(); let currentHeight = img.clientHeight; let delta = e.deltaY < 0 ? 40 : -40; let newHeight = currentHeight + delta;
-                            if (newHeight >= 150 && newHeight <= 1200) { img.style.maxHeight = 'none'; img.style.height = newHeight + 'px'; img.style.width = 'auto'; }
-                        });
-                    });
-                }
-
-
-                // --- CÔNG CỤ VẼ / CỤC TẨY CHO TRÌNH CHIẾU ---
-                const DRAW_COLORS = { red: '#ff5a47', blue: '#3b82f6', green: '#16a34a' };
-                function ensureDrawLayer(slide) {
-                    if (!slide || slide.__drawReady) return;
-                    slide.__drawReady = true;
-                    slide.__drawState = { paths: [], currentTool: 'pen', currentColor: 'red', drawing: false, currentPath: null, isDrawingMode: false };
-
-                    const headerRight = slide.querySelector('.header-right');
-                    if (headerRight) {
-                        const zoomPlus = headerRight.querySelector('.zoom-btn:last-of-type');
-                        const toolbar = document.createElement('div');
-                        toolbar.className = 'draw-toolbar';
-                        toolbar.innerHTML = `
-                            <div class="draw-sep"></div>
-                            <button class="draw-btn pen-btn active" type="button" title="Bút vẽ">✏️</button>
-                            <button class="draw-btn eraser-btn" type="button" title="Cục tẩy">🧽</button>
-                            <button class="color-btn active" type="button" data-color="red" title="Màu đỏ"></button>
-                            <button class="color-btn" type="button" data-color="blue" title="Màu xanh dương"></button>
-                            <button class="color-btn" type="button" data-color="green" title="Màu xanh lá"></button>
-                            <button class="draw-btn clear-btn" type="button" title="Xóa toàn bộ nét vẽ">🗑️</button>
-                        `;
-                        const timer = headerRight.querySelector('.timer');
-                        headerRight.insertBefore(toolbar, timer || null);
-
-                        toolbar.querySelector('.pen-btn').addEventListener('click', () => toggleSlidePen(slide));
-                        toolbar.querySelector('.eraser-btn').addEventListener('click', () => setSlideTool(slide, 'eraser'));
-                        toolbar.querySelector('.clear-btn').addEventListener('click', () => clearSlideDrawing(slide));
-                        toolbar.querySelectorAll('.color-btn').forEach(btn => {
-                            btn.addEventListener('click', () => setSlideColor(slide, btn.dataset.color));
-                        });
-                    }
-
-                    const canvas = document.createElement('canvas');
-                    canvas.className = 'slide-draw-canvas';
-                    slide.appendChild(canvas);
-                    slide.__drawCanvas = canvas;
-                    slide.__drawCtx = canvas.getContext('2d');
-
-                    const getPos = (evt) => {
-                        const rect = canvas.getBoundingClientRect();
-                        return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
-                    };
-
-                    canvas.addEventListener('pointerdown', (evt) => {
-                        const state = slide.__drawState;
-                        if (!state.isDrawingMode || (!slide.classList.contains('draw-mode-pen') && !slide.classList.contains('draw-mode-eraser'))) return;
-                        evt.preventDefault();
-                        const pos = getPos(evt);
-                        state.drawing = true;
-                        try { canvas.setPointerCapture(evt.pointerId); } catch (e) {}
-                        if (state.currentTool === 'pen') {
-                            state.currentPath = { color: state.currentColor, points: [pos] };
-                            state.paths.push(state.currentPath);
-                            redrawSlideDrawing(slide);
-                        } else {
-                            eraseAtPoint(slide, pos.x, pos.y);
-                        }
-                    });
-
-                    canvas.addEventListener('pointermove', (evt) => {
-                        const state = slide.__drawState;
-                        if (!state.drawing || !state.isDrawingMode) return;
-                        evt.preventDefault();
-                        const pos = getPos(evt);
-                        if (state.currentTool === 'pen') {
-                            if (state.currentPath) state.currentPath.points.push(pos);
-                            redrawSlideDrawing(slide);
-                        } else {
-                            eraseAtPoint(slide, pos.x, pos.y);
-                        }
-                    });
-
-                    const stopDraw = (evt) => {
-                        const state = slide.__drawState;
-                        state.drawing = false;
-                        state.currentPath = null;
-                        if (evt) {
-                            try { canvas.releasePointerCapture(evt.pointerId); } catch (e) {}
-                        }
-                    };
-                    canvas.addEventListener('pointerup', stopDraw);
-                    canvas.addEventListener('pointercancel', stopDraw);
-                    canvas.addEventListener('pointerleave', stopDraw);
-
-                    resizeSlideCanvas(slide);
-                    setSlideColor(slide, 'red');
-                    disableSlideDrawing(slide);
-                }
-
-                function updateSlideToolUI(slide) {
-                    const state = slide.__drawState;
-                    const toolbar = slide.querySelector('.draw-toolbar');
-                    if (!toolbar) return;
-                    const penBtn = toolbar.querySelector('.pen-btn');
-                    const eraserBtn = toolbar.querySelector('.eraser-btn');
-                    if (penBtn) penBtn.classList.toggle('active', !!state.isDrawingMode && state.currentTool === 'pen');
-                    if (eraserBtn) eraserBtn.classList.toggle('active', !!state.isDrawingMode && state.currentTool === 'eraser');
-                }
-
-                function disableSlideDrawing(slide) {
-                    ensureDrawLayer(slide);
-                    const state = slide.__drawState;
-                    state.isDrawingMode = false;
-                    state.drawing = false;
-                    state.currentPath = null;
-                    slide.classList.remove('draw-mode-pen', 'draw-mode-eraser');
-                    updateSlideToolUI(slide);
-                }
-
-                function enableSlideDrawing(slide, tool = 'pen') {
-                    ensureDrawLayer(slide);
-                    const state = slide.__drawState;
-                    state.isDrawingMode = true;
-                    state.currentTool = tool;
-                    slide.classList.remove('draw-mode-pen', 'draw-mode-eraser');
-                    slide.classList.add(tool === 'eraser' ? 'draw-mode-eraser' : 'draw-mode-pen');
-                    updateSlideToolUI(slide);
-                }
-
-                function toggleSlidePen(slide) {
-                    ensureDrawLayer(slide);
-                    const state = slide.__drawState;
-                    if (state.isDrawingMode && state.currentTool === 'pen') {
-                        disableSlideDrawing(slide);
-                    } else {
-                        enableSlideDrawing(slide, 'pen');
-                    }
-                }
-
-                function setSlideTool(slide, tool) {
-                    ensureDrawLayer(slide);
-                    const state = slide.__drawState;
-                    if (tool === 'eraser') {
-                        if (!state.isDrawingMode) return;
-                        enableSlideDrawing(slide, 'eraser');
-                    } else {
-                        enableSlideDrawing(slide, 'pen');
-                    }
-                }
-
-                function setSlideColor(slide, colorName) {
-                    ensureDrawLayer(slide);
-                    const state = slide.__drawState;
-                    if (!DRAW_COLORS[colorName]) return;
-                    state.currentColor = colorName;
-                    const toolbar = slide.querySelector('.draw-toolbar');
-                    if (toolbar) {
-                        toolbar.querySelectorAll('.color-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.color === colorName));
-                    }
-                    if (state.isDrawingMode) {
-                        enableSlideDrawing(slide, 'pen');
-                    } else {
-                        updateSlideToolUI(slide);
-                    }
-                }
-
-                function clearSlideDrawing(slide) {
-                    ensureDrawLayer(slide);
-                    slide.__drawState.paths = [];
-                    slide.__drawState.currentPath = null;
-                    redrawSlideDrawing(slide);
-                }
-
-                function eraseAtPoint(slide, x, y) {
-                    const state = slide.__drawState;
-                    const radius = 22;
-                    const radius2 = radius * radius;
-                    state.paths = state.paths.filter(path => {
-                        return !path.points.some(p => {
-                            const dx = p.x - x;
-                            const dy = p.y - y;
-                            return dx * dx + dy * dy <= radius2;
-                        });
-                    });
-                    redrawSlideDrawing(slide);
-                }
-
-                function resizeSlideCanvas(slide) {
-                    if (!slide || !slide.__drawCanvas) return;
-                    const canvas = slide.__drawCanvas;
-                    const rect = canvas.getBoundingClientRect();
-                    const dpr = window.devicePixelRatio || 1;
-                    const width = Math.max(1, Math.round(rect.width));
-                    const height = Math.max(1, Math.round(rect.height));
-                    canvas.width = Math.round(width * dpr);
-                    canvas.height = Math.round(height * dpr);
-                    const ctx = slide.__drawCtx;
-                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                    redrawSlideDrawing(slide);
-                }
-
-                function redrawSlideDrawing(slide) {
-                    if (!slide || !slide.__drawCanvas) return;
-                    const canvas = slide.__drawCanvas;
-                    const ctx = slide.__drawCtx;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    slide.__drawState.paths.forEach(path => {
-                        if (!path.points || !path.points.length) return;
-                        ctx.beginPath();
-                        ctx.strokeStyle = DRAW_COLORS[path.color] || DRAW_COLORS.red;
-                        ctx.lineWidth = 3;
-                        ctx.lineCap = 'round';
-                        ctx.lineJoin = 'round';
-                        ctx.moveTo(path.points[0].x, path.points[0].y);
-                        for (let i = 1; i < path.points.length; i++) {
-                            ctx.lineTo(path.points[i].x, path.points[i].y);
-                        }
-                        if (path.points.length === 1) {
-                            ctx.lineTo(path.points[0].x + 0.01, path.points[0].y + 0.01);
-                        }
-                        ctx.stroke();
-                    });
-                }
-
-                function initPresentationDrawTools() {
-                    document.querySelectorAll('.slide-container').forEach(slide => ensureDrawLayer(slide));
-                }
-
-                window.addEventListener('resize', () => {
-                    document.querySelectorAll('.slide-container').forEach(slide => resizeSlideCanvas(slide));
-                });
-
-                // --- NÂNG CẤP VUỐT TRÊN MOBILE (SWIPE) ---
-                let touchStartX = 0; let touchEndX = 0;
-                document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
-                document.addEventListener('touchend', e => {
-                    if(document.activeElement.tagName === "INPUT") return; // Chặn vuốt khi đang chạm vào ô nhập đáp án
-                    touchEndX = e.changedTouches[0].screenX;
-                    let diff = touchStartX - touchEndX;
-                    if (Math.abs(diff) > 60) { if (diff > 0) nextSlide(); else prevSlide(); }
-                }, {passive: true});
-            </script>
-        
-        <script>
-            window.addEventListener("DOMContentLoaded", function(){
-                // 🟢 HỆ THỐNG TỰ BÁO LỖI VÀ CHUYỂN HƯỚNG UX
-                try {
-                    const data = [{"title": "Câu 1", "part": 1, "type": "mc", "content": "Một tiệm tranh có ${11}$ bức tranh gỗ và ${10}$ bức tranh sơn mài, các bức tranh là khác nhau. Chọn ngẫu nhiên ${9}$ bức tranh để mua. Xác suất để có đúng ${2}$ bức tranh gỗ được chọn là", "images": [], "explanation": "Một tiệm tranh có ${11}$ bức tranh gỗ và ${10}$ bức tranh sơn mài, các bức tranh là khác nhau. Chọn ngẫu nhiên ${9}$ bức tranh để mua. Xác suất để có đúng ${2}$ bức tranh gỗ được chọn là\n\nA. ${\\frac{3}{4199}}$.\t   B. ${\\frac{11}{58786}}$.\t     C. ${\\frac{5}{8398}}$.\t     D. *${\\frac{660}{29393}}$.\n\nLời giải:\n Chọn D\nSố phần tử của không gian mẫu là: $C^{9}_{21}=293930$.\n\nSố cách chọn ${9}$ bức tranh để mua trong đó có đúng ${2}$ bức tranh gỗ là: $C^{2}_{11}.C^{7}_{10}=6600$.\n\nXác suất để có đúng ${2}$ bức tranh gỗ được chọn là: $P=\\dfrac{6600}{293930}=\\frac{660}{29393}$ \n\n", "options": [{"label": "A", "text": "${\\frac{3}{4199}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{11}{58786}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{5}{8398}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{660}{29393}}$.", "is_correct": true}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 2", "part": 1, "type": "mc", "content": "Một nhà sách có ${15}$ cuốn sách tham khảo môn Văn 10 và ${14}$ cuốn sách tham khảo môn Sinh Học 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${5}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 được chọn là", "images": [], "explanation": "Một nhà sách có ${15}$ cuốn sách tham khảo môn Văn 10 và ${14}$ cuốn sách tham khảo môn Sinh Học 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${5}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 được chọn là\n\nA. ${\\frac{22022}{435}}$.\t   B. ${\\frac{2}{585}}$.\t     C. ${\\frac{13189}{13195}}$.\t     D. *${\\frac{250}{261}}$.\n\nLời giải:\n Chọn D\nSố phần tử của không gian mẫu là: $C^{5}_{29}=118755$.\n\nSố cách chọn có cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 là: $C^{5}_{29}-C^{5}_{15}-C^{5}_{14}=\\frac{250}{261}$.\n\nXác suất để cả cuốn sách tham khảo môn Văn 10 và cuốn sách tham khảo môn Sinh Học 10 được chọn là: $P=\\dfrac{113750}{118755}=\\frac{250}{261}$ \n\n", "options": [{"label": "A", "text": "${\\frac{22022}{435}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{2}{585}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{13189}{13195}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{250}{261}}$.", "is_correct": true}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 3", "part": 1, "type": "mc", "content": "Một hộp chứa 32 thẻ được đánh số từ 1 đến 32. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;29]}$”. Xác suất của biến cố ${A}$ là", "images": [], "explanation": "Một hộp chứa 32 thẻ được đánh số từ 1 đến 32. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;29]}$”. Xác suất của biến cố ${A}$ là\n\nA. ${\\frac{15}{16}}$.\t   B. ${\\frac{9}{8}}$.\t     C. *${\\frac{29}{32}}$.\t     D. ${1}$.\n\nLời giải:\n Chọn C \n Số phần tử của không gian mẫu là: $n(\\Omega)=32$.\n\n$n(A)=29-1+1=29$.\n\n Xác suất của biến cố ${A}$ là $P=\\dfrac{29}{32}=\\frac{29}{32}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{15}{16}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{9}{8}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{29}{32}}$.", "is_correct": true}, {"label": "D", "text": "${1}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 4", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 8”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 8”. Xác suất của biến cố ${A}$ bằng\n\nA. ${\\frac{2}{3}}$.\t   B. ${\\frac{19}{36}}$.\t     C. *${\\frac{7}{12}}$.\t     D. ${\\frac{23}{36}}$.\n\nLời giải:\n Chọn C \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(1;1), (1;2), (1;3), (1;4), (1;5), (1;6), (2;1), (2;2), (2;3), (2;4), (2;5), (3;1), (3;2), (3;3), (3;4), (4;1), (4;2), (4;3), (5;1), (5;2), (6;1)\\}$. \n\n Vậy số phần tử của biến cố ${A}$ là ${21}$.\n\n Xác suất của biến cố ${A}$ là: $P=\\dfrac{21}{36}=\\frac{7}{12}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{2}{3}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{19}{36}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{7}{12}}$.", "is_correct": true}, {"label": "D", "text": "${\\frac{23}{36}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 5", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng\n\nA. ${\\frac{23}{36}}$.\t   B. ${\\frac{2}{9}}$.\t     C. *${\\frac{5}{18}}$.\t     D. ${\\frac{13}{36}}$.\n\nLời giải:\n Chọn C \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(3;6), (4;5), (4;6), (5;4), (5;5), (5;6), (6;3), (6;4), (6;5), (6;6)\\}$. \n\n Vậy số phần tử của biến cố ${A}$ là ${10}$.\n\n Xác suất của biến cố ${A}$ là: $P=\\dfrac{10}{36}=\\frac{5}{18}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{23}{36}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{2}{9}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{5}{18}}$.", "is_correct": true}, {"label": "D", "text": "${\\frac{13}{36}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 6", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 6”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 6”. Xác suất của biến cố ${A}$ bằng\n\nA. ${\\frac{1}{12}}$.\t   B. *${\\frac{5}{36}}$.\t     C. ${\\frac{1}{4}}$.\t     D. ${\\frac{2}{9}}$.\n\nLời giải:\n Chọn B \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(1;5), (2;4), (3;3), (4;2), (5;1)\\}$. \n\n Vậy số phần tử của biến cố ${A}$ là ${5}$.\n\n Xác suất của biến cố ${A}$ là: $P=\\dfrac{5}{36}=\\frac{5}{36}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{1}{12}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{5}{36}}$.", "is_correct": true}, {"label": "C", "text": "${\\frac{1}{4}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{2}{9}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 7", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 9”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 9”. Xác suất của biến cố ${A}$ bằng\n\nA. ${\\frac{4}{9}}$.\t   B. ${\\frac{13}{18}}$.\t     C. ${\\frac{5}{18}}$.\t     D. *${\\frac{5}{36}}$.\n\nLời giải:\n Chọn D \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(2;6), (3;5), (4;4), (5;3), (6;2)\\}$. \n\n Số phần tử của biến cố ${A}$ là ${5}$. Xác suất của biến cố ${A}$ là: $P=\\dfrac{5}{36}=\\frac{5}{36}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{4}{9}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{13}{18}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{5}{18}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{5}{36}}$.", "is_correct": true}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 8", "part": 1, "type": "mc", "content": "Một hộp chứa 40 quả cầu cùng kích thước được đánh số từ 1 đến 40. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.", "images": [], "explanation": "Một hộp chứa 40 quả cầu cùng kích thước được đánh số từ 1 đến 40. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.\n\nA. *${\\frac{1}{2}}$.\t   B. ${\\frac{11}{20}}$.\t     C. ${\\frac{21}{40}}$.\t     D. ${\\frac{13}{20}}$.\n\nLời giải:\n Chọn A \n Số phần tử của không gian mẫu là: $n(\\Omega)=40$.\n\nGọi ${A}$ là biến cố số ghi trên quả cầu được là một số chẵn.\n\n${A}=\\{2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40\\}\\Rightarrow n(A)=20$.\n\nXác suất của biến cố ${A}$ là: $P=\\dfrac{20}{40}=\\frac{1}{2}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{1}{2}}$.", "is_correct": true}, {"label": "B", "text": "${\\frac{11}{20}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{21}{40}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{13}{20}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 9", "part": 1, "type": "mc", "content": "Một hộp chứa 21 quả cầu cùng kích thước được đánh số từ 1 đến 21. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 12” bằng", "images": [], "explanation": "Một hộp chứa 21 quả cầu cùng kích thước được đánh số từ 1 đến 21. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 12” bằng\n\nA. *${\\frac{1}{21}}$.\t   B. ${\\frac{4}{21}}$.\t     C. ${\\frac{2}{7}}$.\t     D. ${\\frac{2}{21}}$.\n\nLời giải:\n Chọn A \n Số phần tử của không gian mẫu là: $n(\\Omega)=21$.\n\nGọi ${A}$ là biến cố số ghi trên quả cầu được chọn vừa là một số chẵn và chia hết cho 12.\n\n${A}=\\{12\\}\\Rightarrow n(A)=1$.\n\nXác suất của biến cố ${A}$ là: $P=\\dfrac{1}{21}=\\frac{1}{21}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{1}{21}}$.", "is_correct": true}, {"label": "B", "text": "${\\frac{4}{21}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{2}{7}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{2}{21}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 10", "part": 1, "type": "mc", "content": "Một đội có ${6}$ bạn nam và ${8}$ bạn nữ, giáo viên chọn ngẫu nhiên ${4}$ bạn tham gia thi đấu thể thao của trường. Xác suất chọn được ${4}$ bạn nữ là:", "images": [], "explanation": " Một đội có ${6}$ bạn nam và ${8}$ bạn nữ, giáo viên chọn ngẫu nhiên ${4}$ bạn tham gia thi đấu thể thao của trường. Xác suất chọn được ${4}$ bạn nữ là:\n\nA.  ${\\frac{14}{201}}$.\t   B.  ${\\frac{70}{997}}$.\t     C. *${\\frac{10}{143} }$.\t     D. ${\\frac{35}{498}}$ .\n\nLời giải:\n Chọn C\n ${n(\\Omega)= C^{4}_{14} =1001}$ \n\n ${n(A)=C^{4}_{8}=70 }$ \n\n ${P(A) = \\dfrac{10}{143}}$ \n\n", "options": [{"label": "A", "text": "${\\frac{14}{201}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{70}{997}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{10}{143} }$.", "is_correct": true}, {"label": "D", "text": "${\\frac{35}{498}}$ .", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}];
-                    initSlides(data);
-                    initImageZoom(); 
-                } catch(err) {
-                    document.body.innerHTML = "<div style='padding:30px; text-align:center; font-family: sans-serif;'><h2 style='color:#dc2626; font-size:24px;'>⚠️ LỖI HIỂN THỊ TRÊN ZALO/MESSENGER</h2><p style='font-size:18px; color:#334155;'>Trình duyệt nội bộ đang chặn hệ thống Toán học.</p><p style='font-size:16px; color:#004b87; font-weight:bold; background:#e0f2fe; padding:15px; border-radius:10px;'>👉 Vui lòng bấm nút [Chia sẻ] (Góc trên bên phải) ➔ Chọn [Mở bằng Safari] (hoặc Chrome) để làm bài bình thường nhé!</p></div>";
-                }
-            });
-        </script>
-        </body></html>
+let touchStartX = 0, touchEndX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+document.addEventListener('touchend', e => { if(document.activeElement?.tagName === 'INPUT') return; touchEndX = e.changedTouches[0].screenX; let diff = touchStartX - touchEndX; if (Math.abs(diff) > 60) { if (diff > 0) nextSlide(); else prevSlide(); } }, {passive: true});
+document.addEventListener('keydown', e => { if(!examStarted) return; if(e.key === 'ArrowRight') nextSlide(); if(e.key === 'ArrowLeft') prevSlide(); });
+window.addEventListener('DOMContentLoaded', function(){
+  try {
+    const savedName = localStorage.getItem('imath_student_name') || '';
+    document.getElementById('studentNameInput').value = savedName;
+    document.getElementById('studentBadge').textContent = '👤 Học sinh: ' + (savedName || 'Chưa nhập');
+    updateRankingSourceNote();
+    const data = [{"title": "Câu 1", "part": 1, "type": "mc", "content": "Một lớp học có ${14}$ học sinh nam và ${10}$ học sinh nữ. Chọn ngẫu nhiên ${5}$ học sinh của lớp. Xác suất để có đúng ${3}$ học sinh nữ là", "images": [], "explanation": "Một lớp học có ${14}$ học sinh nam và ${10}$ học sinh nữ.  Chọn ngẫu nhiên ${5}$ học sinh của lớp. Xác suất để có đúng ${3}$ học sinh nữ là\n\nA. ${\\frac{1}{154}}$.\t   B. ${\\frac{13}{6072}}$.\t     C. ${\\frac{211}{42504}}$.\t     D. *${\\frac{65}{253}}$.\n\nLời giải:\n Chọn D\nSố phần tử của không gian mẫu là: $C^{5}_{24}=42504$.\n\nSố cách chọn ${5}$ học sinh của lớp trong đó có đúng ${3}$ học sinh nữ là: $C^{2}_{14}.C^{3}_{10}=10920$.\n\nXác suất để có đúng ${3}$ học sinh nữ được chọn là: $P=\\dfrac{10920}{42504}=\\frac{65}{253}$ \n\n", "options": [{"label": "A", "text": "${\\frac{1}{154}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{13}{6072}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{211}{42504}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{65}{253}}$.", "is_correct": true}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 2", "part": 1, "type": "mc", "content": "Một nhà sách có ${12}$ cuốn sách tham khảo môn Hóa Học 10 và ${15}$ cuốn sách tham khảo môn Toán 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${9}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 được chọn là", "images": [], "explanation": "Một nhà sách có ${12}$ cuốn sách tham khảo môn Hóa Học 10 và ${15}$ cuốn sách tham khảo môn Toán 10, các cuốn sách là khác nhau. Chọn ngẫu nhiên ${9}$ cuốn sách để mua. Xác suất để cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 được chọn là\n\nA. ${\\frac{6}{95}}$.\t   B. ${\\frac{308}{1311}}$.\t     C. *${\\frac{896}{897}}$.\t     D. ${\\frac{1533}{24035}}$.\n\nLời giải:\n Chọn C\nSố phần tử của không gian mẫu là: $C^{9}_{27}=4686825$.\n\nSố cách chọn có cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 là: $C^{9}_{27}-C^{9}_{12}-C^{9}_{15}=\\frac{896}{897}$.\n\nXác suất để cả cuốn sách tham khảo môn Hóa Học 10 và cuốn sách tham khảo môn Toán 10 được chọn là: $P=\\dfrac{4681600}{4686825}=\\frac{896}{897}$ \n\n", "options": [{"label": "A", "text": "${\\frac{6}{95}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{308}{1311}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{896}{897}}$.", "is_correct": true}, {"label": "D", "text": "${\\frac{1533}{24035}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 3", "part": 1, "type": "mc", "content": "Một hộp chứa 15 thẻ được đánh số từ 1 đến 15. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;13]}$”. Xác suất của biến cố ${A}$ là", "images": [], "explanation": "Một hộp chứa 15 thẻ được đánh số từ 1 đến 15. Chọn ngẫu nhiên 1 quả thẻ từ hộp. Gọi ${A}$ là biến cố “Số ghi trên thẻ được chọn là một số thuộc đoạn ${[1;13]}$”. Xác suất của biến cố ${A}$ là\n\nA. *${\\frac{13}{15}}$.\t   B. ${1}$.\t     C. ${\\frac{14}{15}}$.\t     D. ${\\frac{6}{5}}$.\n\nLời giải:\n Chọn A \n Số phần tử của không gian mẫu là: $n(\\Omega)=15$.\n\n$n(A)=13-1+1=13$.\n\n Xác suất của biến cố ${A}$ là $P=\\dfrac{13}{15}=\\frac{13}{15}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{13}{15}}$.", "is_correct": true}, {"label": "B", "text": "${1}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{14}{15}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{6}{5}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 4", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 9”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo nhỏ hơn 9”. Xác suất của biến cố ${A}$ bằng\n\nA. ${\\frac{29}{36}}$.\t   B. *${\\frac{13}{18}}$.\t     C. ${\\frac{2}{3}}$.\t     D. ${\\frac{3}{4}}$.\n\nLời giải:\n Chọn B \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(1;1), (1;2), (1;3), (1;4), (1;5), (1;6), (2;1), (2;2), (2;3), (2;4), (2;5), (2;6), (3;1), (3;2), (3;3), (3;4), (3;5), (4;1), (4;2), (4;3), (4;4), (5;1), (5;2), (5;3), (6;1), (6;2)\\}$. \n\n Vậy số phần tử của biến cố ${A}$ là ${26}$.\n\n Xác suất của biến cố ${A}$ là: $P=\\dfrac{26}{36}=\\frac{13}{18}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{29}{36}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{13}{18}}$.", "is_correct": true}, {"label": "C", "text": "${\\frac{2}{3}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{3}{4}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 5", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 6”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo lớn hơn 6”. Xác suất của biến cố ${A}$ bằng\n\nA. ${\\frac{19}{36}}$.\t   B. ${\\frac{1}{4}}$.\t     C. *${\\frac{7}{12}}$.\t     D. ${\\frac{2}{3}}$.\n\nLời giải:\n Chọn C \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(1;6), (2;5), (2;6), (3;4), (3;5), (3;6), (4;3), (4;4), (4;5), (4;6), (5;2), (5;3), (5;4), (5;5), (5;6), (6;1), (6;2), (6;3), (6;4), (6;5), (6;6)\\}$. \n\n Vậy số phần tử của biến cố ${A}$ là ${21}$.\n\n Xác suất của biến cố ${A}$ là: $P=\\dfrac{21}{36}=\\frac{7}{12}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{19}{36}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{1}{4}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{7}{12}}$.", "is_correct": true}, {"label": "D", "text": "${\\frac{2}{3}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 6", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 7”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 7”. Xác suất của biến cố ${A}$ bằng\n\nA. *${\\frac{1}{6}}$.\t   B. ${\\frac{1}{4}}$.\t     C. ${\\frac{1}{9}}$.\t     D. ${\\frac{1}{2}}$.\n\nLời giải:\n Chọn A \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(1;6), (2;5), (3;4), (4;3), (5;2), (6;1)\\}$. \n\n Vậy số phần tử của biến cố ${A}$ là ${6}$.\n\n Xác suất của biến cố ${A}$ là: $P=\\dfrac{6}{36}=\\frac{1}{6}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{1}{6}}$.", "is_correct": true}, {"label": "B", "text": "${\\frac{1}{4}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{1}{9}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{1}{2}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 7", "part": 1, "type": "mc", "content": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng", "images": [], "explanation": "Gieo một con xúc xắc cân đối và đồng chất hai lần. Gọi ${A}$ là biến cố “Tổng số chấm của hai lần gieo bằng 8 và tích số chấm của hai lần gieo lớn hơn 8”. Xác suất của biến cố ${A}$ bằng\n\nA. *${\\frac{5}{36}}$.\t   B. ${\\frac{5}{18}}$.\t     C. ${\\frac{11}{36}}$.\t     D. ${\\frac{7}{12}}$.\n\nLời giải:\n Chọn A \n Số phần tử của không gian mẫu: $n(\\Omega)=36$.\n\n${A}=\\{(2;6), (3;5), (4;4), (5;3), (6;2)\\}$. \n\n Số phần tử của biến cố ${A}$ là ${5}$. Xác suất của biến cố ${A}$ là: $P=\\dfrac{5}{36}=\\frac{5}{36}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{5}{36}}$.", "is_correct": true}, {"label": "B", "text": "${\\frac{5}{18}}$.", "is_correct": false}, {"label": "C", "text": "${\\frac{11}{36}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{7}{12}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 8", "part": 1, "type": "mc", "content": "Một hộp chứa 17 quả cầu cùng kích thước được đánh số từ 1 đến 17. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.", "images": [], "explanation": "Một hộp chứa 17 quả cầu cùng kích thước được đánh số từ 1 đến 17. Chọn ngẫu nhiên 1 quả cầu từ hộp. Tính xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn”.\n\nA. ${\\frac{9}{17}}$.\t   B. *${\\frac{8}{17}}$.\t     C. ${\\frac{11}{17}}$.\t     D. ${\\frac{13}{17}}$.\n\nLời giải:\n Chọn B \n Số phần tử của không gian mẫu là: $n(\\Omega)=17$.\n\nGọi ${A}$ là biến cố số ghi trên quả cầu được là một số chẵn.\n\n${A}=\\{2, 4, 6, 8, 10, 12, 14, 16\\}\\Rightarrow n(A)=8$.\n\nXác suất của biến cố ${A}$ là: $P=\\dfrac{8}{17}=\\frac{8}{17}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{9}{17}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{8}{17}}$.", "is_correct": true}, {"label": "C", "text": "${\\frac{11}{17}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{13}{17}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 9", "part": 1, "type": "mc", "content": "Một hộp chứa 27 quả cầu cùng kích thước được đánh số từ 1 đến 27. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 10” bằng", "images": [], "explanation": "Một hộp chứa 27 quả cầu cùng kích thước được đánh số từ 1 đến 27. Chọn ngẫu nhiên 1 quả cầu từ hộp. Xác suất của biến cố “Số ghi trên quả cầu được chọn là một số chẵn và chia hết cho 10” bằng\n\nA. ${\\frac{1}{9}}$.\t   B. *${\\frac{2}{27}}$.\t     C. ${\\frac{2}{9}}$.\t     D. ${\\frac{8}{27}}$.\n\nLời giải:\n Chọn B \n Số phần tử của không gian mẫu là: $n(\\Omega)=27$.\n\nGọi ${A}$ là biến cố số ghi trên quả cầu được chọn vừa là một số chẵn và chia hết cho 10.\n\n${A}=\\{10, 20\\}\\Rightarrow n(A)=2$.\n\nXác suất của biến cố ${A}$ là: $P=\\dfrac{2}{27}=\\frac{2}{27}$.\n \n\n", "options": [{"label": "A", "text": "${\\frac{1}{9}}$.", "is_correct": false}, {"label": "B", "text": "${\\frac{2}{27}}$.", "is_correct": true}, {"label": "C", "text": "${\\frac{2}{9}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{8}{27}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}, {"title": "Câu 10", "part": 1, "type": "mc", "content": "Một đội có ${6}$ bạn nam và ${6}$ bạn nữ, giáo viên chọn ngẫu nhiên ${3}$ bạn tham gia thi đấu võ thuật của tỉnh. Xác suất chọn được ${3}$ bạn nam là:", "images": [], "explanation": " Một đội có ${6}$ bạn nam và ${6}$ bạn nữ, giáo viên chọn ngẫu nhiên ${3}$ bạn tham gia thi đấu võ thuật của tỉnh. Xác suất chọn được ${3}$ bạn nam là:\n\nA.  ${\\frac{4}{45}} $.\t   B. *${\\frac{1}{11} }$.\t     C.  ${\\frac{10}{111}}$.\t     D.  ${\\frac{5}{56}}$.\n\nLời giải:\n Chọn B\n ${n(\\Omega)= C^{3}_{12} =220}$ \n\n ${n(A)=C^{3}_{6}=20 }$ \n\n ${P(A) = \\dfrac{1}{11}}$ \n\n", "options": [{"label": "A", "text": "${\\frac{4}{45}} $.", "is_correct": false}, {"label": "B", "text": "${\\frac{1}{11} }$.", "is_correct": true}, {"label": "C", "text": "${\\frac{10}{111}}$.", "is_correct": false}, {"label": "D", "text": "${\\frac{5}{56}}$.", "is_correct": false}], "correct_answer": "", "image_paths": [], "image_lookup": {}}];
+    initSlides(data); initImageZoom();
+  } catch(err) {
+    document.body.innerHTML = "<div style='padding:30px; text-align:center; font-family:sans-serif;'><h2 style='color:#dc2626; font-size:24px;'>⚠️ LỖI HIỂN THỊ</h2><p style='font-size:18px; color:#334155;'>Không thể tải giao diện bài thi.</p></div>";
+  }
+});
+</script>
+</body>
+</html>
